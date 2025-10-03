@@ -52,8 +52,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/lib/supabaseClient';
 
 // stop static prerendering of this client-only route
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 
 function CallbackInner() {
   const { ready, user } = useAuth();
