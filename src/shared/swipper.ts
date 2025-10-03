@@ -12,3 +12,7 @@ export type SwipperPaginationOptions = {
     dynamicBullets?: boolean;
     clickable?: boolean;
 }
+
+export type SwiperNavigationOptions = {
+
+}

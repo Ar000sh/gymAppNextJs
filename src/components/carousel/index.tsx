@@ -3,13 +3,13 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import type { PaginationOptions,  ScrollbarOptions } from "swiper/types";  
+import type { NavigationOptions, PaginationOptions,  ScrollbarOptions } from "swiper/types";  
 
 
 // Import Swiper styles
 // Import Swiper styles
 import 'swiper/swiper-bundle.css';
-import type { SwipperPaginationOptions } from '@/shared/swipper';
+import type { SwiperNavigationOptions, SwipperPaginationOptions } from '@/shared/swipper';
 
 function useMeasuredWidth<T extends HTMLElement>() {
   const ref = React.useRef<T | null>(null);
@@ -38,6 +38,22 @@ function useMeasuredWidth<T extends HTMLElement>() {
   
   return { ref, width } as const;
 }
+
+const extractNavigationOptions = (
+  opts?: SwiperNavigationOptions
+): NavigationOptions => {
+  // Styling if like size and so on and actuall Navgation can be returned
+
+
+  
+  return {
+    // default look
+    //type: (opts?.bulletsType ?? "bullets") as PaginationOptions["type"],
+    //clickable: opts?.clickable ?? true,
+    //dynamicBullets: opts?.dynamicBullets ?? false,
+    // You can add 'el' or render functions here later if needed
+  };
+};
 
 const extractPaginationOptions = (
   opts?: SwipperPaginationOptions
@@ -78,6 +94,7 @@ type Props = {
   enableNavigation?: boolean;
   enablePagination?: boolean;
   paginationOptions?: SwipperPaginationOptions;
+  navigationOptions?: SwiperNavigationOptions;
   enableScrollbar?: boolean;
   loop?: boolean;
 };
@@ -88,6 +105,12 @@ const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450
   ? (paginationOptions
       ? extractPaginationOptions(paginationOptions)
       : { clickable: true })
+  : false;
+
+    const navigation: NavigationOptions | boolean = enablePagination
+  ? (paginationOptions
+      ? extractNavigationOptions(paginationOptions)
+      : { enabled: true })
   : false;
 
   const scrollbar:  ScrollbarOptions | boolean = enableScrollbar 

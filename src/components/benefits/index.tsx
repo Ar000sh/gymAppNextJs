@@ -33,6 +33,12 @@ const benefits: BenefitType[] = [
     description:
       "Fusce vestibulum aliquam ut cras. Nisl lectus egestas sapien nisl. Lacus at mi sit pellentesque. Congue parturient.",
   },
+  {
+    icon: <AcademicCapIcon className="h-6 w-6" />,
+    title: "Expert and Pro Trainers_",
+    description:
+      "Fusce vestibulum ssss aliquam ut cras. Nisl lectus egestas sapien nisl. Lacus at mi sit pellentesque. Congue parturient.",
+  }
 ];
 
 const container = {
@@ -113,7 +119,7 @@ const Benefits = () => {
         >
           <Carousel 
           elements={swipperArray} 
-          spaceBetween={10} 
+          spaceBetween={5} 
           maxWidth={400} 
           containerStyles="" 
           enablePagination={true}
