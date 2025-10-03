@@ -1,12 +1,5 @@
 "use client";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { SelectedPage } from "@/shared/types";
-import ActionButton from "@/shared/ActionButton";
-import HomePageText from "../../../public/assets/HomePageText.png";
-import HomePageGraphic from "../../../public/assets/HomePageGraphic.png";
-import SponsorRedBull from "../../../public/assets/SponsorRedBull.png";
-import SponsorForbes from "../../../public/assets/SponsorForbes.png";
-import SponsorFortune from "../../../public/assets/SponsorFortune.png";
 import EvolveText from "../../../public/assets/EvolveText.png";
 
 //import AnchorLink from "react-anchor-link-smooth-scroll";
@@ -15,11 +8,9 @@ import NormalButton from "../buttons/normalButton";
 
 // we passed the setSelectedPage so that we can navigate to the correct site we clicking on the buttons Join Now and learn more
 // Other possiblity globle state maybe ????? 
-type Props = {
-  
-};
 
-const Home = (props: Props) => {
+
+const Home = () => {
   const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
 
   return (

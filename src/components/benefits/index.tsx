@@ -1,15 +1,12 @@
 "use client";
-import ActionButton from "@/shared/ActionButton";
 import HText from "@/shared/HText";
 import type { BenefitType } from "@/shared/types";
-import { SelectedPage } from "@/shared/types";
 import {
   HomeModernIcon,
   UserGroupIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import BenefitsPageGraphic from "../../../public/assets/BenefitsPageGraphic.png";
 import Benefit from "./Benefit";
 import AbstractWaves from "../../../public/assets/AbstractWaves.png"; 
 import ContentSparkles from "../../../public/assets/Sparkles.png"
@@ -45,10 +42,7 @@ const container = {
   },
 };
 
-type Props = {
-};
-
-const Benefits = (props: Props) => {
+const Benefits = () => {
   const populateSwiperArray = (array: any[]) : React.ReactElement[] => {
     const swipperArray: JSX.Element[] = [];
     array.map((item) => (

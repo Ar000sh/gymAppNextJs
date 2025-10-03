@@ -1,14 +1,11 @@
 
 
-import { SelectedPage } from "@/shared/types";
 import Benefits from "@/components/benefits";
 import ContactUs from "@/components/contactUs";
 import Home from "@/components/home";
-import Navbar from "@/components/navbar";
 import OurClasses from "@/components/ourClasses";
 
 const LandingPage = () => {
-const noop = () => {};
  /* useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY === 0) {

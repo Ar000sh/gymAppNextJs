@@ -1,15 +1,11 @@
 "use client"
-import { SelectedPage } from "@/shared/types";
 import { motion } from "framer-motion";
-import ContactUsPageGraphic from "../../../public/assets/ContactUsPageGraphic.png";
 import HText from "@/shared/HText";
 import type { FormField } from "@/shared/formTypes";
 import FormBuilder from "../formBuilder";
 
-type Props = {
-};
 
-const ContactUs = (props: Props) => {
+const ContactUs = () => {
 
   const fields: FormField[] = [
     {
