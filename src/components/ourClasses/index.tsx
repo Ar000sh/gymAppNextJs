@@ -7,7 +7,7 @@ import Class from "./Class";
 import Carousel from "../carousel";
 import type { JSX } from "react/jsx-runtime";
 
-const classes: Array<ClassType> = [
+const classes: ClassType[] = [
   {
     name: "Weight Training Classes",
     description:
@@ -42,14 +42,9 @@ const classes: Array<ClassType> = [
   },
 ];
 
-
-
-
-
-
 const OurClasses = () => {
 
-  const populateSwiperArray = (array: any[]) : React.ReactElement[] => {
+  const populateSwiperArray = (array: ClassType[]) : React.ReactElement[] => {
     const swipperArray: JSX.Element[] = [];
     array.map((item, index) => (
       swipperArray.push(
