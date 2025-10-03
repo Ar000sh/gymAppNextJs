@@ -1,0 +1,55 @@
+/* 1) Fonts — tip: use next/font for best perf; see note below */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+
+/* 4) Design tokens */
+@theme {
+  /* Colors */
+  --color-gray-20: #F8F4EB;
+  --color-gray-50: #EFE6E6;
+  --color-gray-100: #DFCCCC;
+  --color-gray-500: #5E0000;
+
+  --color-primary-100: #FFE1E0;
+  --color-primary-300: #FFA6A3;
+  --color-primary-500: #FF6B66;
+
+  --color-secondary-400: #FFCD5B;
+  --color-secondary-500: #FFC132;
+
+  /* Fonts */
+  --font-dmsans: "DM Sans", sans-serif;
+  --font-montserrat: "Montserrat", sans-serif;
+
+  /* Breakpoints */
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1060px;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: "DM Sans", sans-serif;
+  @apply font-dmsans text-gray-500;
+}
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+
