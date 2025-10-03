@@ -47,7 +47,7 @@ export default function InputFieldControl({ field, formfieldBaseStyles }: Props)
       />
       {errType && (
         <p className="pt-1.5 text-primary-500">
-          {getMessage(errType, field.messages as any)}
+          {getMessage(errType, field.messages as Record<string, string>)}
         </p>
       )}
     </div>

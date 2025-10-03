@@ -39,7 +39,7 @@ export default function TextareaFieldControl({ field, formfieldBaseStyles }: Pro
       />
       {errType && (
         <p className="pt-0.3 text-primary-500">
-          {getMessage(errType, field.messages as any)}
+          {getMessage(errType, field.messages as Record<string, string>)}
         </p>
       )}
     </div>

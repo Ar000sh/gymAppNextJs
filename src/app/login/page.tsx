@@ -56,10 +56,15 @@ export default function LoginPage() {
           onValid={async (data) => {
             try {
               setFormError(null);
-              await signIn(data.email, data.password);
+              await signIn(data.email as string, data.password as string);
               router.replace(next);
-            } catch (err: any) {
-              setFormError(err?.message || "Sign in failed.");
+            } catch (err: unknown) {
+              // Narrow the error safely:
+              let message = 'Sign in failed.';
+              if (err instanceof Error) message = err.message;
+              // If using Supabase's AuthError:
+              // else if (err instanceof AuthError) message = err.message;
+              setFormError(message);
             }
           }}
           onInvalid={() => setFormError("Please fix the highlighted fields.")}

@@ -14,7 +14,7 @@ import type { JSX } from "react";
 import Carousel from "../carousel";
 import NormalButton from "../buttons/normalButton";
 
-const benefits: Array<BenefitType> = [
+const benefits: BenefitType[] = [
   {
     icon: <HomeModernIcon className="h-6 w-6" />,
     title: "State of the Art Facilities",
@@ -43,7 +43,7 @@ const container = {
 };
 
 const Benefits = () => {
-  const populateSwiperArray = (array: any[]) : React.ReactElement[] => {
+  const populateSwiperArray = (array: BenefitType[]) : React.ReactElement[] => {
     const swipperArray: JSX.Element[] = [];
     array.map((item) => (
       swipperArray.push(

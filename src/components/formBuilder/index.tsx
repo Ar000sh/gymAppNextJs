@@ -12,8 +12,8 @@ type FormBuilderProps = {
   submitLabel?: string;
   submitStyles?: string;
   formfieldBaseStyles?: string;
-  defaultValues?: Record<string, any>;
-  onValid?: (data: Record<string, any>) => void;
+  defaultValues?: Record<string, unknown>;
+  onValid?: (data: Record<string, unknown>) => void;
   onInvalid?: (errors: FieldErrors) => void;
 
   // native submit support
@@ -38,7 +38,7 @@ export default function FormBuilder({
   const methods = useForm({ defaultValues });
   const { handleSubmit } = methods;
 
-  const submitHandler = (data: Record<string, any>, event?: React.BaseSyntheticEvent) => {
+  const submitHandler = (data: Record<string, unknown>, event?: React.BaseSyntheticEvent) => {
     if (action) {
       (event?.target as HTMLFormElement | undefined)?.submit?.();
       return;

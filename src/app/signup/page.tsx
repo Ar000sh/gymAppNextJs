@@ -87,7 +87,10 @@ export default function SignupPage() {
               className="flex flex-col gap-2 rounded-2xl"
               onValid={async (data) => {
                 const password = getLoose(data, "password") as string;
-                const verifyPassword = getLoose(data, "verifyPassword") as string;
+                const verifyPassword = getLoose(
+                  data,
+                  "verifyPassword"
+                ) as string;
 
                 if (password !== verifyPassword) {
                   setFormError("Passwords are not identical.");
@@ -96,29 +99,45 @@ export default function SignupPage() {
 
                 try {
                   setFormError(null);
-                  await signUp(data.email, data.password, {
+                  await signUp(data.email as string, data.password as string, {
                     emailRedirectTo: redirectTo,
                   });
-                  setEmail(data.email);
+                  setEmail(data.email as string);
                   setVerifyEmailView(true);
-                } catch (err: any) {
-                  setFormError(err?.message || "Sign up failed.");
+                } catch (err: unknown) {
+                  // Narrow the error safely:
+                  let message = "Sign up failed.";
+                  if (err instanceof Error) message = err.message;
+                  // If using Supabase's AuthError:
+                  // else if (err instanceof AuthError) message = err.message;
+                  setFormError(message);
                 }
               }}
-              onInvalid={() => setFormError("Please fix the highlighted fields.")}
+              onInvalid={() =>
+                setFormError("Please fix the highlighted fields.")
+              }
             />
 
-            {formError && <p className="mt-3 text-sm text-primary-500">{formError}</p>}
+            {formError && (
+              <p className="mt-3 text-sm text-primary-500">{formError}</p>
+            )}
 
             <p className="mt-4 text-sm">
-              Have an account? <Link href="/login" className="text-primary-500">Log in</Link>
+              Have an account?{" "}
+              <Link href="/login" className="text-primary-500">
+                Log in
+              </Link>
             </p>
           </>
         ) : (
           email && (
             <>
               <div className="flex items-center justify-center pb-3">
-                <img className="h-24 w-24" src="/assets/paperPlane.svg" alt="" />
+                <img
+                  className="h-24 w-24"
+                  src="/assets/paperPlane.svg"
+                  alt=""
+                />
               </div>
               <h1 className="pb-3 text-center text-2xl font-bold text-black">
                 Please verfiy your email
@@ -135,7 +154,7 @@ export default function SignupPage() {
                   className="rounded-lg bg-gray-200 px-4 py-2 text-black hover:bg-gray-300"
                   onClick={async () => {
                     // resend verification
-                    await resendVerficationEmail(email)
+                    await resendVerficationEmail(email);
                     // show a small toast or message if you want
                   }}
                 >
@@ -143,7 +162,6 @@ export default function SignupPage() {
                 </button>
               </div>
             </>
-
           )
         )}
       </div>
