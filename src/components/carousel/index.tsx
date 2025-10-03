@@ -99,7 +99,7 @@ type Props = {
   enableScrollbar?: boolean;
   loop?: boolean;
 };
-const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450, enableNavigation, enablePagination, enableScrollbar, paginationOptions, loop}: Props) => {
+const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450, enableNavigation, enablePagination, enableScrollbar, paginationOptions, loop, navigationOptions}: Props) => {
   const { ref: containerRef, width: measuredWidth } = useMeasuredWidth<HTMLDivElement>();
 
   const pagination: PaginationOptions | boolean = enablePagination
@@ -109,8 +109,8 @@ const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450
   : false;
 
     const navigation: NavigationOptions | boolean = enablePagination
-  ? (paginationOptions
-      ? extractNavigationOptions(paginationOptions)
+  ? (navigationOptions
+      ? extractNavigationOptions(navigationOptions)
       : { enabled: true })
   : false;
 

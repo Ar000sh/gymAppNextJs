@@ -14,5 +14,5 @@ export type SwipperPaginationOptions = {
 }
 
 export type SwiperNavigationOptions = {
-
+    test?: boolean
 }
