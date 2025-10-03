@@ -17,7 +17,12 @@ jobs:
 
     env:
       NEXT_TELEMETRY_DISABLED: 1
-
+      # these make Next fail the build on lint/type errors (Next 15 already does, but explicit is nice)
+      NEXTJS_IGNORE_ESLINT: "0"
+      NEXTJS_IGNORE_TYPECHECK: "0"
+      # if you rely on NEXT_PUBLIC_* vars at build time, inject them here via repo/org ENV or GitHub Secrets:
+      # NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      # NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,5 +36,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build 
+        run: npm run build-pipeline
+
+      # Lint separately so you see a clear failure reason (Vercel also runs lint)
+      - name: Lint
+        run: npm run lint
+
+      # Type-check separately so you get fast feedback (Vercel also runs TS checks)
+      - name: Type check
+        run: npm run typecheck
+
+      # (Optional) Upload the .next output as an artifact so you can inspect it
+      #- name: Upload build artifact
+      #  if: success()
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: next-build
+      #    path: .next
