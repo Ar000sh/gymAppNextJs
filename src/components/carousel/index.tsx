@@ -45,8 +45,9 @@ const extractNavigationOptions = (
   // Styling if like size and so on and actuall Navgation can be returned
 
 
-  
+
   return {
+    enabled: true
     // default look
     //type: (opts?.bulletsType ?? "bullets") as PaginationOptions["type"],
     //clickable: opts?.clickable ?? true,
