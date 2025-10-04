@@ -32,6 +32,7 @@ export type SwiperNavigationOptions = {
   iconColor?: string; // Color of the arrow
   iconSize?: string; // size of the arrow
   iconOffsetX?: string; // moves the next icon to the right and the prev icon to the left to better postion the arrow inside the container
+  showOnHover?: boolean; // sets the visiblty of the navigations to none and then visible once hovering over the swiper
 };
 
 export type AutoplayOptions = {

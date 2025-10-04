@@ -1,4 +1,12 @@
 /* Scope to this component instance */
+
+.mySwiper:hover,
+.mySwiper:focus-visible {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex;
+  }
+}
 .mySwiper .swiper-button-next,
 .mySwiper .swiper-button-prev {
   width: var(--nav-size, 44px);
@@ -7,6 +15,7 @@
   background: var(--nav-bg, transparent);
   border-radius: var(--nav-radius, 0);
   color: var(--nav-icon-color, currentColor);
+  display: var(--nav-visibility, flex);
 }
 
 .mySwiper .swiper-button-next svg,

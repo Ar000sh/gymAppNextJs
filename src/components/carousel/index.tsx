@@ -61,7 +61,7 @@ function buildNavigationCSSVars(
   const icon = opts?.iconColor ?? "";
   const iconSz = opts?.iconSize ?? "";
   const iconOffsetX = opts?.iconOffsetX ?? "0px";
-
+  const visiblty = opts?.showOnHover ? "none" : "flex";
   const radius =
     opts?.shape === NavigationShape.circle
       ? "50%"
@@ -79,6 +79,7 @@ function buildNavigationCSSVars(
     ["--nav-icon-color" as string]: icon,
     ["--nav-icon-size" as string]: iconSz,
     ["--nav-icon-offset-x" as string]: iconOffsetX,
+    ["--nav-visibility" as string]: visiblty,
   };
 }
 const extractNavigationOptions = (

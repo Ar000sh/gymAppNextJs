@@ -139,6 +139,7 @@ const Benefits = () => {
               backgroundHoverColor: "#897f33",
               shape: NavigationShape.circle,
               iconOffsetX: "2px",
+              showOnHover: true,
             }}
           />
         </motion.div>
