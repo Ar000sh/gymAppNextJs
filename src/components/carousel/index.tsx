@@ -2,8 +2,8 @@
 // Import Swiper React components
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import type { NavigationOptions, PaginationOptions,  ScrollbarOptions } from "swiper/types";  
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
+import type { NavigationOptions, PaginationOptions, ScrollbarOptions, AutoplayOptions as SwiperAutoplayOptionsType } from "swiper/types";  
 
 
 // Import Swiper styles
@@ -67,6 +67,7 @@ const extractPaginationOptions = (
     // You can add 'el' or render functions here later if needed
   };
 };
+
 function computeSlidesPerView(
 width: number,
 spaceBetween: number,
@@ -98,8 +99,9 @@ type Props = {
   navigationOptions?: SwiperNavigationOptions;
   enableScrollbar?: boolean;
   loop?: boolean;
+  autoplay?: boolean | SwiperAutoplayOptionsType;
 };
-const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450, enableNavigation, enablePagination, enableScrollbar, paginationOptions, loop, navigationOptions}: Props) => {
+const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450, enableNavigation, enablePagination, enableScrollbar, paginationOptions, loop, navigationOptions, autoplay}: Props) => {
   const { ref: containerRef, width: measuredWidth } = useMeasuredWidth<HTMLDivElement>();
 
   const pagination: PaginationOptions | boolean = enablePagination
@@ -108,7 +110,7 @@ const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450
       : { clickable: true })
   : false;
 
-    const navigation: NavigationOptions | boolean = enablePagination
+  const navigation: NavigationOptions | boolean = enablePagination
   ? (navigationOptions
       ? extractNavigationOptions(navigationOptions)
       : { enabled: true })
@@ -117,19 +119,24 @@ const Carousel = ({elements, spaceBetween=50, containerStyles = "", maxWidth=450
   const scrollbar:  ScrollbarOptions | boolean = enableScrollbar 
   ? { draggable: true } : false;
 
+  const autoplayConfig: SwiperAutoplayOptionsType | boolean = typeof autoplay === 'boolean' 
+  ? (autoplay ? { delay: 1000, disableOnInteraction: false, pauseOnMouseEnter: true } : false)
+  : autoplay || false;
+
 const slidesPerView = computeSlidesPerView(measuredWidth, spaceBetween, maxWidth);
 //console.log("slidesPerView: ", slidesPerView)
   return (
     <div className={containerStyles} ref={containerRef}>
       {measuredWidth > 0 && (
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={spaceBetween}
         slidesPerView={slidesPerView}
         navigation={enableNavigation ? enableNavigation : false}
         pagination={pagination}
         scrollbar={scrollbar}
         loop={loop}
+        autoplay={autoplayConfig}
       >
           {elements.map((el, i) => (
             <SwiperSlide className='!flex !items-center !justify-center h-full' key={el.key ?? i}>{el}</SwiperSlide>
