@@ -8,11 +8,12 @@ import {
 } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import Benefit from "./Benefit";
-import AbstractWaves from "../../../public/assets/AbstractWaves.png"; 
-import ContentSparkles from "../../../public/assets/Sparkles.png"
+import AbstractWaves from "../../../public/assets/AbstractWaves.png";
+import ContentSparkles from "../../../public/assets/Sparkles.png";
 import type { JSX } from "react";
 import Carousel from "../carousel";
 import NormalButton from "../buttons/normalButton";
+import { NavigationShape } from "@/shared/swipper";
 
 const benefits: BenefitType[] = [
   {
@@ -38,7 +39,7 @@ const benefits: BenefitType[] = [
     title: "Expert and Pro Trainers_",
     description:
       "Fusce vestibulum ssss aliquam ut cras. Nisl lectus egestas sapien nisl. Lacus at mi sit pellentesque. Congue parturient.",
-  }
+  },
 ];
 
 const container = {
@@ -49,19 +50,19 @@ const container = {
 };
 
 const Benefits = () => {
-  const populateSwiperArray = (array: BenefitType[]) : React.ReactElement[] => {
+  const populateSwiperArray = (array: BenefitType[]): React.ReactElement[] => {
     const swipperArray: JSX.Element[] = [];
-    array.map((item) => (
+    array.map((item) =>
       swipperArray.push(
         <Benefit
-              key={item.title}
-              icon={item.icon}
-              title={item.title}
-              description={item.description}
-            />
-      )
-      ));
-      return swipperArray;
+          key={item.title}
+          icon={item.icon}
+          title={item.title}
+          description={item.description}
+        />,
+      ),
+    );
+    return swipperArray;
   };
 
   const swipperArray = populateSwiperArray(benefits);
@@ -92,7 +93,7 @@ const Benefits = () => {
 
         {/* BENEFITS */}
         <motion.div
-          className="md:-mt-3 mt-5 items-center justify-between gap-8 md:flex"
+          className="mt-5 items-center justify-between gap-8 md:-mt-3 md:flex"
           //className="mt-5 gap-8 flex flex-col md:flex-row"
           initial="hidden"
           whileInView="visible"
@@ -117,21 +118,29 @@ const Benefits = () => {
           viewport={{ once: true, amount: 0.5 }}
           variants={container}
         >
-          <Carousel 
-          elements={swipperArray} 
-          spaceBetween={5} 
-          maxWidth={400} 
-          containerStyles="" 
-          enablePagination={true}
-          loop={true}
-          enableNavigation={true}
-          autoplay={{
-            delay: 1500,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true
-          }}
+          <Carousel
+            elements={swipperArray}
+            spaceBetween={5}
+            maxWidth={400}
+            containerStyles=""
+            enablePagination={true}
+            loop={true}
+            enableNavigation={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            navigationOptions={{
+              size: "44px",
+              iconSize: "22px",
+              iconColor: "white",
+              backgroundColor: "black",
+              backgroundHoverColor: "#897f33",
+              shape: NavigationShape.circle,
+              iconOffsetX: "2px",
+            }}
           />
-
         </motion.div>
 
         {/* GRAPHICS AND DESCRIPTION */}
@@ -147,8 +156,14 @@ const Benefits = () => {
           <div>
             {/* TITLE */}
             <div className="relative">
-              <div className="before:absolute before:-top-20 before:-left-20 before:z-[1] before:content-[var(--abstractwaves)]"
-              style={{ "--abstractwaves": `url(${AbstractWaves})` } as React.CSSProperties}>
+              <div
+                className="before:absolute before:-top-20 before:-left-20 before:z-[1] before:content-[var(--abstractwaves)]"
+                style={
+                  {
+                    "--abstractwaves": `url(${AbstractWaves})`,
+                  } as React.CSSProperties
+                }
+              >
                 <motion.div
                   initial="hidden"
                   whileInView="visible"
@@ -196,8 +211,14 @@ const Benefits = () => {
 
             {/* BUTTON */}
             <div className="relative mt-16">
-              <div className="before:absolute before:-bottom-20 before:right-40 before:z-[-1] before:content-[var(--content-sparkles)]"
-              style={{ "--content-sparkles": `url(${ContentSparkles})` } as React.CSSProperties}>
+              <div
+                className="before:absolute before:right-40 before:-bottom-20 before:z-[-1] before:content-[var(--content-sparkles)]"
+                style={
+                  {
+                    "--content-sparkles": `url(${ContentSparkles})`,
+                  } as React.CSSProperties
+                }
+              >
                 <NormalButton onClick={() => console.log("Join Now")}>
                   Join Now
                 </NormalButton>

@@ -1,0 +1,37 @@
+/* Scope to this component instance */
+.mySwiper .swiper-button-next,
+.mySwiper .swiper-button-prev {
+  width: var(--nav-size, 44px);
+  height: var(--nav-size, 44px);
+
+  background: var(--nav-bg, transparent);
+  border-radius: var(--nav-radius, 0);
+  color: var(--nav-icon-color, currentColor);
+}
+
+.mySwiper .swiper-button-next svg,
+.mySwiper .swiper-button-prev svg {
+  width: var(--nav-icon-size, 100%);
+  height: var(--nav-icon-size, 100%);
+}
+
+/* --- Icon horizontal offset --- */
+/* NEXT: push icon to the RIGHT by +offset */
+.mySwiper .swiper-button-next::after,
+.mySwiper .swiper-button-next svg {
+  transform: translateX(var(--nav-icon-offset-x, 0)) !important;
+}
+
+/* PREV: push icon to the LEFT by -offset */
+.mySwiper .swiper-button-prev::after,
+.mySwiper .swiper-button-prev svg {
+  transform: rotate(180deg) translateX(var(--nav-icon-offset-x, 0px)) !important;
+}
+
+/* Hover/focus: use hover color when provided, otherwise keep base */
+.mySwiper .swiper-button-next:hover,
+.mySwiper .swiper-button-prev:hover,
+.mySwiper .swiper-button-next:focus-visible,
+.mySwiper .swiper-button-prev:focus-visible {
+  background: var(--nav-bg-hover, var(--nav-bg, transparent));
+}
