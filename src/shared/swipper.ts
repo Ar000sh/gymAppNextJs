@@ -24,6 +24,19 @@ export const NavigationShape = {
 export type NavigationShape =
   (typeof NavigationShape)[keyof typeof NavigationShape];
 
+export const NavigationPosition = {
+  Default: "default",
+  TopRight: "top-right",
+  TopLeft: "top-left",
+  TopCenter: "top-center",
+  BottomRight: "bottom-right",
+  BottomLeft: "bottom-left",
+  BottomCenter: "bottom-center",
+} as const;
+
+export type NavigationPosition =
+  (typeof NavigationPosition)[keyof typeof NavigationPosition];
+
 export type SwiperNavigationOptions = {
   backgroundColor?: string; // determines the color of the navigation buttons background
   backgroundHoverColor?: string; // determines background Color on hover
@@ -33,6 +46,7 @@ export type SwiperNavigationOptions = {
   iconSize?: string; // size of the arrow
   iconOffsetX?: string; // moves the next icon to the right and the prev icon to the left to better postion the arrow inside the container
   showOnHover?: boolean; // sets the visiblty of the navigations to none and then visible once hovering over the swiper
+  position?: NavigationPosition; // determines the position of the navigation buttons
 };
 
 export type AutoplayOptions = {

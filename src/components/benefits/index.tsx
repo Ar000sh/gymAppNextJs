@@ -13,7 +13,7 @@ import ContentSparkles from "../../../public/assets/Sparkles.png";
 import type { JSX } from "react";
 import Carousel from "../carousel";
 import NormalButton from "../buttons/normalButton";
-import { NavigationShape } from "@/shared/swipper";
+import { NavigationPosition, NavigationShape } from "@/shared/swipper";
 
 const benefits: BenefitType[] = [
   {
@@ -111,7 +111,7 @@ const Benefits = () => {
         </motion.div>
 
         <motion.div
-          className=""
+          className="pt-5"
           //className="mt-5 gap-8 flex flex-col md:flex-row"
           initial="hidden"
           whileInView="visible"
@@ -140,6 +140,41 @@ const Benefits = () => {
               shape: NavigationShape.circle,
               iconOffsetX: "2px",
               showOnHover: true,
+            }}
+          />
+        </motion.div>
+
+        <h1 className="pt-10 text-3xl">New Slider</h1>
+        <motion.div
+          className="pt-10"
+          //className="mt-5 gap-8 flex flex-col md:flex-row"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={container}
+        >
+          <Carousel
+            elements={swipperArray}
+            spaceBetween={5}
+            maxWidth={400}
+            containerStyles=""
+            loop={true}
+            enableNavigation={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            navigationOptions={{
+              size: "44px",
+              iconSize: "22px",
+              iconColor: "white",
+              backgroundColor: "black",
+              backgroundHoverColor: "#897f33",
+              shape: NavigationShape.rounded,
+              iconOffsetX: "2px",
+              showOnHover: true,
+              position: NavigationPosition.BottomCenter,
             }}
           />
         </motion.div>

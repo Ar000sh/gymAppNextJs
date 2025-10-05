@@ -13,27 +13,26 @@ type Props = {
 };
 
 const Benefit = ({ icon, title, description }: Props) => {
-  
   return (
     <motion.div
       variants={childVariant}
-      className="mt-5 rounded-md border-2 border-gray-100 px-5 py-16 text-center min-h-[370px]"
+      className="mt-5 min-h-[370px] rounded-md border-2 border-gray-100 px-5 py-16 text-center md:mt-0"
     >
       <div className="mb-4 flex justify-center">
-        <div className="rounded-full border-2 border-gray-100 bg-primary-100 p-4">
+        <div className="bg-primary-100 rounded-full border-2 border-gray-100 p-4">
           {icon}
         </div>
       </div>
 
       <h4 className="font-bold">{title}</h4>
       <p className="my-3">{description}</p>
-     {/*<AnchorLink
+      {/*<AnchorLink
         className="text-sm font-bold text-primary-500 underline hover:text-secondary-500"
         onClick={() => setSelectedPage(SelectedPage.ContactUs)}
         href={`#${SelectedPage.ContactUs}`}
       >
         <p>Learn More</p>
-      </AnchorLink>  */} 
+      </AnchorLink>  */}
       <p>Learn More</p>
     </motion.div>
   );

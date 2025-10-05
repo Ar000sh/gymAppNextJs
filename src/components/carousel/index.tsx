@@ -15,6 +15,7 @@ import type {
   ScrollbarOptions,
   AutoplayOptions as SwiperAutoplayOptionsType,
 } from "swiper/types";
+import type { Swiper as SwiperInstance } from "swiper";
 
 import "./styles.css";
 // Import Swiper styles
@@ -26,6 +27,7 @@ import {
   type SwiperNavigationOptions,
   type SwipperPaginationOptions,
 } from "@/shared/swipper";
+import NavButton from "./customNavButton";
 
 function useMeasuredWidth<T extends HTMLElement>() {
   const ref = React.useRef<T | null>(null);
@@ -82,20 +84,59 @@ function buildNavigationCSSVars(
     ["--nav-visibility" as string]: visiblty,
   };
 }
+
+function initExternalNavigation(
+  sw: SwiperInstance,
+  prevEl: HTMLElement,
+  nextEl: HTMLElement,
+): void {
+  if (!sw.navigation) return;
+  const current = sw.params.navigation;
+  const base: NavigationOptions =
+    typeof current === "boolean" ? {} : (current ?? {});
+  sw.params.navigation = { ...base, enabled: true, prevEl, nextEl };
+  sw.navigation.destroy();
+  sw.navigation.init();
+  sw.navigation.update();
+}
+
 const extractNavigationOptions = (
   opts?: SwiperNavigationOptions,
+  nextRef?: React.RefObject<HTMLButtonElement | null>,
+  prevRef?: React.RefObject<HTMLButtonElement | null>,
 ): NavigationOptions => {
-  // Styling if like size and so on and actuall Navgation Options can be returned
+  const wantsExternal = !!opts?.position && opts.position !== "default"; // only if explicitly set
+  const haveEls = !!nextRef?.current && !!prevRef?.current;
 
-  return {
-    enabled: true,
-    // default look
-    //type: (opts?.bulletsType ?? "bullets") as PaginationOptions["type"],
-    //clickable: opts?.clickable ?? true,
-    //dynamicBullets: opts?.dynamicBullets ?? false,
-    // You can add 'el' or render functions here later if needed
-  };
+  if (wantsExternal && haveEls) {
+    return {
+      enabled: true,
+      prevEl: prevRef!.current!,
+      nextEl: nextRef!.current!,
+    };
+  }
+
+  // Fallback to built-in buttons
+  return { enabled: true };
 };
+
+function getPositionPlacement(position: string): "top" | "bottom" | "default" {
+  if (position === "default") return "default";
+  const dash = position.indexOf("-");
+  if (dash < 0) return "default";
+  const prefix = position.substring(0, dash);
+  return prefix === "top" ? "top" : prefix === "bottom" ? "bottom" : "default";
+}
+
+function getPositionAlign(position: string): "left" | "center" | "right" {
+  if (!position || position === "default") return "left";
+  const parts = position.split("-");
+  const align = parts[1] ?? "left";
+  return (["left", "center", "right"].includes(align) ? align : "left") as
+    | "left"
+    | "center"
+    | "right";
+}
 
 const extractPaginationOptions = (
   opts?: SwipperPaginationOptions,
@@ -155,16 +196,29 @@ const Carousel = ({
 }: Props) => {
   const { ref: containerRef, width: measuredWidth } =
     useMeasuredWidth<HTMLDivElement>();
+  const nextRef = React.useRef<HTMLButtonElement | null>(null);
+  const prevRef = React.useRef<HTMLButtonElement | null>(null);
+  const swiperRef = React.useRef<SwiperInstance | null>(null);
 
+  const position = navigationOptions?.position ?? "default";
+  const useExternalNav = enableNavigation && position !== "default";
+  const placement = getPositionPlacement(position);
+  const align = getPositionAlign(position);
+  const barJustify =
+    align === "right"
+      ? "justify-end"
+      : align === "center"
+        ? "justify-center"
+        : "justify-start";
   const pagination: PaginationOptions | boolean = enablePagination
     ? paginationOptions
       ? extractPaginationOptions(paginationOptions)
       : { clickable: true }
     : false;
 
-  const navigation: NavigationOptions | boolean = enablePagination
+  const navigation: NavigationOptions | boolean = enableNavigation
     ? navigationOptions
-      ? extractNavigationOptions(navigationOptions)
+      ? extractNavigationOptions(navigationOptions, nextRef, prevRef)
       : { enabled: true }
     : false;
 
@@ -186,9 +240,34 @@ const Carousel = ({
   );
 
   const navStyleVars = buildNavigationCSSVars(navigationOptions);
+
+  const onSwiper = (sw: SwiperInstance) => {
+    swiperRef.current = sw;
+    if (useExternalNav && prevRef.current && nextRef.current) {
+      initExternalNavigation(sw, prevRef.current, nextRef.current);
+    }
+  };
+
+  const barClassBase = `flex items-center`;
   //console.log("slidesPerView: ", slidesPerView)
   return (
     <div className={containerStyles} ref={containerRef}>
+      {useExternalNav && placement === "top" && (
+        <div className={`${barClassBase} mb-2 ${barJustify}`}>
+          <div className="flex items-center gap-2">
+            <NavButton
+              navigationOptions={navigationOptions ?? {}}
+              kind="prev"
+              btnRef={prevRef}
+            />
+            <NavButton
+              navigationOptions={navigationOptions ?? {}}
+              kind="next"
+              btnRef={nextRef}
+            />
+          </div>
+        </div>
+      )}
       {measuredWidth > 0 && (
         <Swiper
           className="mySwiper"
@@ -196,11 +275,12 @@ const Carousel = ({
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={spaceBetween}
           slidesPerView={slidesPerView}
-          navigation={enableNavigation ? enableNavigation : false}
+          navigation={navigation}
           pagination={pagination}
           scrollbar={scrollbar}
           loop={loop}
           autoplay={autoplayConfig}
+          onSwiper={onSwiper}
         >
           {elements.map((el, i) => (
             <SwiperSlide
@@ -211,6 +291,22 @@ const Carousel = ({
             </SwiperSlide>
           ))}
         </Swiper>
+      )}
+      {useExternalNav && placement === "bottom" && (
+        <div className={`${barClassBase} mt-2 ${barJustify}`}>
+          <div className="flex items-center gap-2">
+            <NavButton
+              navigationOptions={navigationOptions ?? {}}
+              kind="prev"
+              btnRef={prevRef}
+            />
+            <NavButton
+              navigationOptions={navigationOptions ?? {}}
+              kind="next"
+              btnRef={nextRef}
+            />
+          </div>
+        </div>
       )}
     </div>
   );
