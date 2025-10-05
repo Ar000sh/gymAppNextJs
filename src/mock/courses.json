@@ -1,0 +1,198 @@
+[
+  {
+    "id": "c001",
+    "category": "Strength",
+    "title": "Full Body Strength Basics",
+    "subtitle": "Foundations for Beginners",
+    "description": "Build solid fundamentals with compound movements, proper form, and progressive overload. This intro-friendly course focuses on safe technique and steady gains.",
+    "imageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-10-10",
+    "startTime": "18:00",
+    "endDate": "2025-12-10",
+    "endTime": "19:30",
+    "ageRestriction": "NO_RESTRICTION",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "strength-basics@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-10-10",
+        "startTime": "18:00",
+        "endDate": "2025-10-10",
+        "endTime": "19:30"
+      },
+      {
+        "startDate": "2025-10-25",
+        "startTime": "14:00",
+        "endDate": "2025-10-25",
+        "endTime": "16:00"
+      }
+    ]
+  },
+  {
+    "id": "c002",
+    "category": "Strength",
+    "title": "HIIT Conditioning Express",
+    "subtitle": "High Intensity, Big Results",
+    "description": "Short, explosive sessions to improve VO2 max, burn calories, and boost endurance. Scalable intervals suitable for mixed fitness levels.",
+    "imageUrl": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-11-01",
+    "startTime": "07:30",
+    "endDate": "2026-01-15",
+    "endTime": "08:15",
+    "ageRestriction": "ADULT_18_PLUS",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "hiit-express@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-11-01",
+        "startTime": "07:30",
+        "endDate": "2025-11-01",
+        "endTime": "08:15"
+      },
+      {
+        "startDate": "2025-11-08",
+        "startTime": "07:30",
+        "endDate": "2025-11-08",
+        "endTime": "08:15"
+      }
+    ]
+  },
+  {
+    "id": "c003",
+    "category": "Cardio",
+    "title": "Yoga & Mobility Flow",
+    "subtitle": "Flexibility and Recovery",
+    "description": "Enhance joint range of motion, reduce stiffness, and improve posture with guided flows. Ideal as a complement to strength and endurance work.",
+    "imageUrl": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-10-20",
+    "startTime": "19:00",
+    "endDate": "2025-12-20",
+    "endTime": "20:00",
+    "ageRestriction": "NO_RESTRICTION",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "yoga-mobility@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-10-20",
+        "startTime": "19:00",
+        "endDate": "2025-10-20",
+        "endTime": "20:00"
+      }
+    ]
+  },
+  {
+    "id": "c004",
+    "category": "Endurance",
+    "title": "Cycling Power Boost",
+    "subtitle": "Indoor Spin for Strength & Speed",
+    "description": "Challenge your endurance with high-energy indoor cycling classes designed to improve stamina, strength, and cardiovascular health with motivating playlists.",
+    "imageUrl": "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-11-05",
+    "startTime": "18:30",
+    "endDate": "2026-01-10",
+    "endTime": "19:30",
+    "ageRestriction": "NO_RESTRICTION",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "cycling-power@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-11-05",
+        "startTime": "18:30",
+        "endDate": "2025-11-05",
+        "endTime": "19:30"
+      }
+    ]
+  },
+  {
+    "id": "c005",
+    "category": "Strength",
+    "title": "Barbell Technique Mastery",
+    "subtitle": "Perfect Your Form",
+    "description": "Learn safe and effective lifting mechanics for squats, deadlifts, and presses under expert guidance. Ideal for those looking to build confidence in strength training.",
+    "imageUrl": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-10-15",
+    "startTime": "17:00",
+    "endDate": "2025-12-15",
+    "endTime": "18:30",
+    "ageRestriction": "ADULT_18_PLUS",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "barbell-tech@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-10-15",
+        "startTime": "17:00",
+        "endDate": "2025-10-15",
+        "endTime": "18:30"
+      }
+    ]
+  },
+  {
+    "id": "c006",
+    "category": "Wellness",
+    "title": "Mindful Meditation & Breathwork",
+    "subtitle": "Balance Body and Mind",
+    "description": "Slow down and reconnect with your breath. This guided mindfulness session reduces stress, enhances focus, and promotes overall mental clarity.",
+    "imageUrl": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-11-10",
+    "startTime": "19:00",
+    "endDate": "2026-02-10",
+    "endTime": "20:00",
+    "ageRestriction": "NO_RESTRICTION",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "mindful-meditation@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-11-10",
+        "startTime": "19:00",
+        "endDate": "2025-11-10",
+        "endTime": "20:00"
+      }
+    ]
+  },
+  {
+    "id": "c007",
+    "category": "Functional",
+    "title": "Cross Functional Training",
+    "subtitle": "Agility, Power, and Coordination",
+    "description": "Combine strength and cardio in this dynamic circuit workout that enhances mobility, coordination, and athletic performance through functional movements.",
+    "imageUrl": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-10-18",
+    "startTime": "09:30",
+    "endDate": "2026-01-18",
+    "endTime": "10:30",
+    "ageRestriction": "NO_RESTRICTION",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "cross-functional@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-10-18",
+        "startTime": "09:30",
+        "endDate": "2025-10-18",
+        "endTime": "10:30"
+      }
+    ]
+  },
+  {
+    "id": "c008",
+    "category": "Dance",
+    "title": "Zumba Energy Party",
+    "subtitle": "Move to the Rhythm",
+    "description": "A fun, dance-based workout to Latin and world music that keeps your heart pumping and your body moving. Perfect for all levels and great energy guaranteed!",
+    "imageUrl": "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-10-22",
+    "startTime": "18:30",
+    "endDate": "2025-12-22",
+    "endTime": "19:30",
+    "ageRestriction": "NO_RESTRICTION",
+    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "email": "zumba-energy@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-10-22",
+        "startTime": "18:30",
+        "endDate": "2025-10-22",
+        "endTime": "19:30"
+      }
+    ]
+  }
+]

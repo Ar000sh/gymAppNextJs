@@ -1,0 +1,184 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useMemo, useState } from "react";
+import type { Course } from "@/types/course";
+import { format, parseISO, isSameDay } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTag,
+  faCalendarDays,
+  faLocationDot,
+  faEnvelope,
+  faHeart as faHeartSolid,
+} from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+
+interface CourseCardProps {
+  course: Course;
+}
+
+export default function CourseCard({ course }: CourseCardProps) {
+  const {
+    title,
+    subtitle,
+    category,
+    imageUrl,
+    startDate,
+    startTime,
+    endDate,
+    endTime,
+    ageRestriction,
+    address,
+    email,
+  } = course;
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const dateTimeDisplay = useMemo(() => {
+    const start = parseISO(`${startDate}${startTime ? `T${startTime}` : ""}`);
+    const end = parseISO(`${endDate}${endTime ? `T${endTime}` : ""}`);
+
+    const startStr = format(start, "dd MMM yyyy, HH:mm");
+    const endStrSameDay = format(end, "HH:mm");
+    const endStrFull = format(end, "dd MMM yyyy, HH:mm");
+
+    if (isSameDay(start, end)) {
+      return `${startStr} – ${endStrSameDay}`;
+    }
+    return `${startStr} – ${endStrFull}`;
+  }, [startDate, startTime, endDate, endTime]);
+
+  const sessionDisplays = useMemo(() => {
+    if (!course.sessions || course.sessions.length === 0) return [];
+    return course.sessions.map((s) => {
+      const sStart = parseISO(`${s.startDate}${s.startTime ? `T${s.startTime}` : ""}`);
+      const sEnd = parseISO(`${s.endDate}${s.endTime ? `T${s.endTime}` : ""}`);
+      const sStartStr = format(sStart, "dd MMM yyyy, HH:mm");
+      const sEndSameDay = format(sEnd, "HH:mm");
+      const sEndFull = format(sEnd, "dd MMM yyyy, HH:mm");
+      if (isSameDay(sStart, sEnd)) return `${sStartStr} – ${sEndSameDay}`;
+      return `${sStartStr} – ${sEndFull}`;
+    });
+  }, [course.sessions]);
+
+  return (
+    <motion.section
+      whileHover={{ scale: 1.03 }}
+      className="rounded-2xl shadow-lg bg-white border border-gray-100 overflow-hidden transition-all hover:shadow-2xl hover:border-gray-200"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        {/* Left: textual and interactive info */}
+        <div className="p-5 md:p-8 flex flex-col gap-4">
+          {/* Category badge */}
+          <div className="flex items-center gap-2">
+            {category ? (
+              <span className="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide uppercase bg-[var(--color-gray-20)] text-gray-700">
+                <FontAwesomeIcon icon={faTag} className="h-3 w-3" />
+                {category}
+              </span>
+            ) : null}
+          </div>
+
+          {/* Title + 18+ badge */}
+          <div className="flex items-start gap-2">
+            <h1 className="text-3xl md:text-[32px] font-extrabold leading-snug">
+              {title}
+            </h1>
+            {ageRestriction === "ADULT_18_PLUS" ? (
+              <span className="ml-2 inline-flex items-center rounded-md bg-red-500/10 text-red-600 border border-red-500/20 px-2 py-0.5 text-xs font-semibold">
+                18+
+              </span>
+            ) : null}
+          </div>
+
+          {subtitle ? (
+            <p className="text-lg text-gray-600">{subtitle}</p>
+          ) : null}
+
+          {/* Date/Time */}
+          <div className="flex items-start gap-3 text-gray-700">
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              className="mt-1.5 h-5 w-5 text-gray-500"
+            />
+            <div className="flex flex-col gap-1">
+              {sessionDisplays.length > 0 ? (
+                sessionDisplays.map((line, idx) => (
+                  <p key={idx} className="font-medium">
+                    {line}
+                  </p>
+                ))
+              ) : (
+                <p className="font-medium">{dateTimeDisplay}</p>
+              )}
+            </div>
+          </div>
+
+          {/* Address */}
+          <div className="flex items-start gap-3 text-gray-700">
+            <FontAwesomeIcon
+              icon={faLocationDot}
+              className="mt-1.5 h-5 w-5 text-gray-500"
+            />
+            <p className="whitespace-nowrap overflow-hidden text-ellipsis max-w-full">
+              {address}
+            </p>
+          </div>
+
+          {/* Email */}
+          <div className="flex items-start gap-3 text-gray-700">
+            <FontAwesomeIcon
+              icon={faEnvelope}
+              className="mt-1.5 h-5 w-5 text-gray-500"
+            />
+            <a
+              className="text-blue-600 hover:underline"
+              href={`mailto:${email}`}
+            >
+              {email}
+            </a>
+          </div>
+
+          {/* Buttons */}
+          <div className="mt-2 flex items-center gap-3">
+            <a
+              href={`mailto:${email}`}
+              className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition shadow-sm bg-[var(--color-secondary-500)] text-black hover:bg-[var(--color-secondary-400)]"
+            >
+              Website & Tickets
+            </a>
+            <button
+              type="button"
+              aria-pressed={isFavorite}
+              onClick={() => setIsFavorite((v) => !v)}
+              className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium hover:bg-gray-50 shadow-sm transition"
+            >
+              <FontAwesomeIcon
+                icon={isFavorite ? faHeartSolid : faHeartRegular}
+                className={isFavorite ? "text-red-500" : "text-gray-600"}
+              />
+              Favorite
+            </button>
+          </div>
+        </div>
+
+        <div className="relative md:border-l md:border-gray-100 min-h-[320px] overflow-hidden">
+          {imageUrl ? (
+            <motion.div>
+              <Image
+                src={imageUrl}
+                alt={title}
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+                priority
+              />
+            </motion.div>
+          ) : null}
+        </div>
+      </div>
+    </motion.section>
+  );
+}

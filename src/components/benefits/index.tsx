@@ -1,46 +1,15 @@
 "use client";
 import HText from "@/shared/HText";
-import type { BenefitType } from "@/shared/types";
-import {
-  HomeModernIcon,
-  UserGroupIcon,
-  AcademicCapIcon,
-} from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import Benefit from "./Benefit";
+import { useRouter } from "next/navigation";
+import coursesData from "@/mock/courses.json";
 import AbstractWaves from "../../../public/assets/AbstractWaves.png";
 import ContentSparkles from "../../../public/assets/Sparkles.png";
-import type { JSX } from "react";
 import Carousel from "../carousel";
 import NormalButton from "../buttons/normalButton";
 import { NavigationPosition, NavigationShape } from "@/shared/swipper";
-
-const benefits: BenefitType[] = [
-  {
-    icon: <HomeModernIcon className="h-6 w-6" />,
-    title: "State of the Art Facilities",
-    description:
-      "Neque adipiscing amet amet enim. Feugiat dolor enim fermentum in a in lectus pellentesque. Ullamcorper et.",
-  },
-  {
-    icon: <UserGroupIcon className="h-6 w-6" />,
-    title: "100's of Diverse Classes",
-    description:
-      "Eu ipsum id egestas risus tempus enim semper felis quis. Nec consectetur ac venenatis facilisi est. Eget ac turpis id.",
-  },
-  {
-    icon: <AcademicCapIcon className="h-6 w-6" />,
-    title: "Expert and Pro Trainers",
-    description:
-      "Fusce vestibulum aliquam ut cras. Nisl lectus egestas sapien nisl. Lacus at mi sit pellentesque. Congue parturient.",
-  },
-  {
-    icon: <AcademicCapIcon className="h-6 w-6" />,
-    title: "Expert and Pro Trainers_",
-    description:
-      "Fusce vestibulum ssss aliquam ut cras. Nisl lectus egestas sapien nisl. Lacus at mi sit pellentesque. Congue parturient.",
-  },
-];
+import type { Course } from "@/types/course";
+import React from "react";
 
 const container = {
   hidden: {},
@@ -49,28 +18,57 @@ const container = {
   },
 };
 
+const childVariant = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1 },
+};
+
+const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
+  course,
+  onClick,
+}) => {
+  return (
+    <motion.div
+      variants={childVariant}
+      whileHover={{ scale: 1.03 }}   
+      onClick={onClick}
+      className="cursor-pointer rounded-md border-2 border-gray-100 px-5 py-8 text-center hover:shadow-lg transition bg-white"
+    >
+      <div className="mb-4 flex justify-center">
+        <img
+          src={course.imageUrl}
+          alt={course.title}
+          className="rounded-lg w-full h-48 object-cover"
+        />
+      </div>
+
+      <h4 className="font-bold text-lg">{course.title}</h4>
+      <p className="my-3 text-sm text-gray-600 line-clamp-3">
+        {course.description}
+      </p>
+
+      <p className="text-primary-500 font-semibold mt-4">Learn More →</p>
+    </motion.div>
+  );
+};
+
 const Benefits = () => {
-  const populateSwiperArray = (array: BenefitType[]): React.ReactElement[] => {
-    const swipperArray: JSX.Element[] = [];
-    array.map((item) =>
-      swipperArray.push(
-        <Benefit
-          key={item.title}
-          icon={item.icon}
-          title={item.title}
-          description={item.description}
-        />,
-      ),
-    );
-    return swipperArray;
+  const router = useRouter();
+
+  const handleClick = (id: string) => {
+    router.push(`/courses/${id}`);
   };
 
-  const swipperArray = populateSwiperArray(benefits);
+  // ✅ Baue ein stabiles Array für Swiper mit Kurskarten
+  const swipperArray = coursesData.map((course) => (
+    <div key={course.id} className="px-2">
+      <CourseCardMini course={course} onClick={() => handleClick(course.id)} />
+    </div>
+  ));
+
   return (
     <section id="benefits" className="mx-auto min-h-full w-5/6 py-20">
-      <motion.div
-      //className="py-20"
-      >
+      <motion.div>
         {/* HEADER */}
         <motion.div
           className="md:w-3/5"
@@ -83,36 +81,35 @@ const Benefits = () => {
             visible: { opacity: 1, x: 0 },
           }}
         >
-          <HText>MORE THAN JUST GYM.</HText>
-          <p className="my-5 text-sm">
-            We provide world class fitness equipment, trainers and classes to
-            get you to your ultimate fitness goals with ease. We provide true
-            care into each and every member.
+          <HText>OUR FEATURED COURSES.</HText>
+          <p className="my-5 text-sm text-gray-700">
+            Explore our range of fitness and wellness programs — from strength
+            and mobility to high-intensity conditioning. Click on any course to
+            learn more and get started.
           </p>
         </motion.div>
 
-        {/* BENEFITS */}
+        {/* COURSE GRID */}
         <motion.div
-          className="mt-5 items-center justify-between gap-8 md:-mt-3 md:flex"
-          //className="mt-5 gap-8 flex flex-col md:flex-row"
+          className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-8"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
           variants={container}
         >
-          {benefits.map((benefit: BenefitType) => (
-            <Benefit
-              key={benefit.title}
-              icon={benefit.icon}
-              title={benefit.title}
-              description={benefit.description}
+          {coursesData.map((course) => (
+            <CourseCardMini
+              key={course.id}
+              course={course}
+              onClick={() => handleClick(course.id)}
             />
           ))}
         </motion.div>
 
+        {/* FIRST SLIDER (MIT NAVIGATION UND PAGINATION, WIE ORIGINAL) */}
+        <h1 className="pt-10 text-3xl font-semibold">Featured in Motion</h1>
         <motion.div
-          className="pt-5"
-          //className="mt-5 gap-8 flex flex-col md:flex-row"
+          className="pt-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
@@ -127,7 +124,7 @@ const Benefits = () => {
             loop={true}
             enableNavigation={true}
             autoplay={{
-              delay: 3000,
+              delay: 3500,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }}
@@ -144,10 +141,10 @@ const Benefits = () => {
           />
         </motion.div>
 
-        <h1 className="pt-10 text-3xl">New Slider</h1>
+        {/* SECOND SLIDER (RUNDE BUTTONS UNTEN IN DER MITTE, DEIN ALTER "NEW SLIDER") */}
+        <h1 className="pt-10 text-3xl font-semibold">New Slider</h1>
         <motion.div
           className="pt-10"
-          //className="mt-5 gap-8 flex flex-col md:flex-row"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
@@ -179,7 +176,7 @@ const Benefits = () => {
           />
         </motion.div>
 
-        {/* GRAPHICS AND DESCRIPTION */}
+        {/* GRAPHICS UND TEXT */}
         <div className="mt-16 items-center justify-between gap-20 md:mt-28 md:flex">
           {/* GRAPHIC */}
           <img
@@ -190,7 +187,6 @@ const Benefits = () => {
 
           {/* DESCRIPTION */}
           <div>
-            {/* TITLE */}
             <div className="relative">
               <div
                 className="before:absolute before:-top-20 before:-left-20 before:z-[1] before:content-[var(--abstractwaves)]"
@@ -211,14 +207,14 @@ const Benefits = () => {
                   }}
                 >
                   <HText>
-                    MILLIONS OF HAPPY MEMBERS GETTING{" "}
+                    MILLIONS OF MEMBERS GETTING{" "}
                     <span className="text-primary-500">FIT</span>
                   </HText>
                 </motion.div>
               </div>
             </div>
 
-            {/* DESCRIPT */}
+            {/* TEXT */}
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -229,19 +225,13 @@ const Benefits = () => {
                 visible: { opacity: 1, x: 0 },
               }}
             >
-              <p className="my-5">
-                Nascetur aenean massa auctor tincidunt. Iaculis potenti amet
-                egestas ultrices consectetur adipiscing ultricies enim. Pulvinar
-                fames vitae vitae quis. Quis amet vulputate tincidunt at in
-                nulla nec. Consequat sed facilisis dui sit egestas ultrices
-                tellus. Ullamcorper arcu id pretium sapien proin integer nisl.
-                Felis orci diam odio.
+              <p className="my-5 text-gray-700">
+                Our diverse range of courses is designed to help you achieve
+                your fitness goals with expert guidance and modern facilities.
               </p>
-              <p className="mb-5">
-                Fringilla a sed at suspendisse ut enim volutpat. Rhoncus vel est
-                tellus quam porttitor. Mauris velit euismod elementum arcu neque
-                facilisi. Amet semper tortor facilisis metus nibh. Rhoncus sit
-                enim mattis odio in risus nunc.
+              <p className="mb-5 text-gray-700">
+                Whether you're starting your journey or looking to enhance your
+                performance, there's something here for everyone.
               </p>
             </motion.div>
 
@@ -255,8 +245,8 @@ const Benefits = () => {
                   } as React.CSSProperties
                 }
               >
-                <NormalButton onClick={() => console.log("Join Now")}>
-                  Join Now
+                <NormalButton onClick={() => router.push("/courses")}>
+                  View All Courses
                 </NormalButton>
               </div>
             </div>

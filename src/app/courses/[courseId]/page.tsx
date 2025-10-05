@@ -1,0 +1,30 @@
+import fs from "node:fs";
+import path from "node:path";
+import type { Course } from "@/types/course";
+import CourseDetailPage from "@/components/course/CourseDetailPage";
+
+interface CoursePageProps {
+  params: Promise<{ courseId: string }> | { courseId: string };
+}
+
+function readCourses(): Course[] {
+  const filePath = path.join(process.cwd(), "src", "mock", "courses.json");
+  const raw = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(raw) as Course[];
+}
+
+export default async function Page({ params }: CoursePageProps) {
+  const resolvedParams = await params;
+  const courses = readCourses();
+  const course = courses.find((c) => c.id === resolvedParams.courseId);
+
+  if (!course) {
+    return <div>Course not found.</div>;
+  }
+
+  const similarCourses = courses.filter((c) => c.id !== course.id && c.category === course.category);
+
+  return <CourseDetailPage course={course} similarCourses={similarCourses} />;
+}
+
+

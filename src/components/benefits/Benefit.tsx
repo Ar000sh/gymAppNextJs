@@ -1,5 +1,6 @@
+"use client";
 import { motion } from "framer-motion";
-import type { JSX } from "react";
+import { useRouter } from "next/navigation";
 
 const childVariant = {
   hidden: { opacity: 0, scale: 0.9 },
@@ -7,35 +8,37 @@ const childVariant = {
 };
 
 type Props = {
-  icon: JSX.Element;
+  id: string;
+  imageUrl: string;
   title: string;
   description: string;
 };
 
-const Benefit = ({ icon, title, description }: Props) => {
+export default function Benefit({ id, imageUrl, title, description }: Props) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`/courses/${id}`);
+  };
+
   return (
     <motion.div
       variants={childVariant}
-      className="mt-5 min-h-[370px] rounded-md border-2 border-gray-100 px-5 py-16 text-center md:mt-0"
+      onClick={handleClick}
+      className="mt-5 cursor-pointer min-h-[370px] rounded-md border-2 border-gray-100 px-5 py-8 text-center hover:shadow-lg transition"
     >
       <div className="mb-4 flex justify-center">
-        <div className="bg-primary-100 rounded-full border-2 border-gray-100 p-4">
-          {icon}
-        </div>
+        <img
+          src={imageUrl}
+          alt={title}
+          className="rounded-lg w-full h-48 object-cover"
+        />
       </div>
 
-      <h4 className="font-bold">{title}</h4>
-      <p className="my-3">{description}</p>
-      {/*<AnchorLink
-        className="text-sm font-bold text-primary-500 underline hover:text-secondary-500"
-        onClick={() => setSelectedPage(SelectedPage.ContactUs)}
-        href={`#${SelectedPage.ContactUs}`}
-      >
-        <p>Learn More</p>
-      </AnchorLink>  */}
-      <p>Learn More</p>
+      <h4 className="font-bold text-lg">{title}</h4>
+      <p className="my-3 text-sm text-gray-600 line-clamp-3">{description}</p>
+
+      <p className="text-primary-500 font-semibold mt-4">Learn More →</p>
     </motion.div>
   );
-};
-
-export default Benefit;
+}
