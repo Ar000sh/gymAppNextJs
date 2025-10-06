@@ -233,8 +233,8 @@ const Benefits = () => {
                 your fitness goals with expert guidance and modern facilities.
               </p>
               <p className="mb-5 text-gray-700">
-                Whether you're starting your journey or looking to enhance your
-                performance, there's something here for everyone.
+                Whether you are starting your journey or looking to enhance your
+                performance, there is something here for everyone.
               </p>
             </motion.div>
 
