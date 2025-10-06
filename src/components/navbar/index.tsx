@@ -58,16 +58,17 @@ export default function Navbar() {
         <div className={`${flexBetween} mx-auto w-5/6`}>
           <div className={`${flexBetween} w-full gap-16`}>
             {/* LEFT: Logo (ensure file exists at /public/assets/Logo.png) */}
-            <div className="cursor-default">
-              <Image
-                src="/assets/Logo.png"
-                alt="logo"
-                width={120}
-                height={32}
-                priority
-              />
-            </div>
-
+            <Link href={{ pathname: "/landing" }}>
+              <div className="cursor-default">
+                <Image
+                  src="/assets/Logo.png"
+                  alt="logo"
+                  width={120}
+                  height={32}
+                  priority
+                />
+              </div>
+            </Link>
             {/* RIGHT */}
             {isAboveMediumScreens ? (
               // Desktop
