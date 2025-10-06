@@ -4,7 +4,7 @@ import type { Course } from "@/types/course";
 import CourseDetailPage from "@/components/course/CourseDetailPage";
 
 interface CoursePageProps {
-  params: Promise<{ courseId: string }> | { courseId: string };
+  params: { courseId: string };
 }
 
 function readCourses(): Course[] {
@@ -14,17 +14,17 @@ function readCourses(): Course[] {
 }
 
 export default async function Page({ params }: CoursePageProps) {
-  const resolvedParams = await params;
+  const { courseId } = await params;
   const courses = readCourses();
-  const course = courses.find((c) => c.id === resolvedParams.courseId);
+  const course = courses.find((c) => c.id === courseId);
 
   if (!course) {
     return <div>Course not found.</div>;
   }
 
-  const similarCourses = courses.filter((c) => c.id !== course.id && c.category === course.category);
+  const similarCourses = courses.filter(
+    (c) => c.id !== course.id && c.category === course.category,
+  );
 
   return <CourseDetailPage course={course} similarCourses={similarCourses} />;
 }
-
-
