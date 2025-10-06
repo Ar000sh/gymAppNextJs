@@ -2,9 +2,10 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Course } from "@/types/course";
 import CourseDetailPage from "@/components/course/CourseDetailPage";
+import { PageProps } from "../../../../.next/types/app/layout";
 
-interface CoursePageProps {
-  params: Promise<{ courseId: string }> | { courseId: string }; // ✅ works in all cases
+interface CoursePageProps extends PageProps {
+  params: Promise<{ courseId: string }>; // ✅ works in all cases
 }
 
 function readCourses(): Course[] {
