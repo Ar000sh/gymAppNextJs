@@ -30,24 +30,24 @@ const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
   return (
     <motion.div
       variants={childVariant}
-      whileHover={{ scale: 1.03 }}   
+      whileHover={{ scale: 1.03 }}
       onClick={onClick}
-      className="cursor-pointer rounded-md border-2 border-gray-100 px-5 py-8 text-center hover:shadow-lg transition bg-white"
+      className="cursor-pointer rounded-md border-2 border-gray-100 bg-white px-5 py-8 text-center transition hover:shadow-lg"
     >
       <div className="mb-4 flex justify-center">
         <img
           src={course.imageUrl}
           alt={course.title}
-          className="rounded-lg w-full h-48 object-cover"
+          className="h-48 w-full rounded-lg object-cover"
         />
       </div>
 
-      <h4 className="font-bold text-lg">{course.title}</h4>
-      <p className="my-3 text-sm text-gray-600 line-clamp-3">
+      <h4 className="text-lg font-bold">{course.title}</h4>
+      <p className="my-3 line-clamp-3 text-sm text-gray-600">
         {course.description}
       </p>
 
-      <p className="text-primary-500 font-semibold mt-4">Learn More →</p>
+      <p className="text-primary-500 mt-4 font-semibold">Learn More →</p>
     </motion.div>
   );
 };
@@ -62,7 +62,10 @@ const Benefits = () => {
   // ✅ Baue ein stabiles Array für Swiper mit Kurskarten
   const swipperArray = coursesData.map((course) => (
     <div key={course.id} className="px-2">
-      <CourseCardMini course={course} onClick={() => handleClick(course.id)} />
+      <CourseCardMini
+        course={course as Course}
+        onClick={() => handleClick(course.id)}
+      />
     </div>
   ));
 
@@ -91,7 +94,7 @@ const Benefits = () => {
 
         {/* COURSE GRID */}
         <motion.div
-          className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-3"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
@@ -100,7 +103,7 @@ const Benefits = () => {
           {coursesData.map((course) => (
             <CourseCardMini
               key={course.id}
-              course={course}
+              course={course as Course}
               onClick={() => handleClick(course.id)}
             />
           ))}
