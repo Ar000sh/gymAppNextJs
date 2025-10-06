@@ -67,8 +67,8 @@ export default function CourseCard({ course }: CourseCardProps) {
 
   return (
     <motion.section
-      whileHover={{ scale: 1.03 }}
-      className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition-all hover:border-gray-200 hover:shadow-2xl"
+      //whileHover={{ scale: 1.03 }}
+      className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg"
     >
       <div className="grid grid-cols-1 md:grid-cols-2">
         {/* Left: textual and interactive info */}
