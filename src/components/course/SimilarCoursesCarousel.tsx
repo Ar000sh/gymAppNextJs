@@ -8,13 +8,15 @@ interface SimilarCoursesCarouselProps {
   courses: Course[];
 }
 
-export default function SimilarCoursesCarousel({ courses }: SimilarCoursesCarouselProps) {
+export default function SimilarCoursesCarousel({
+  courses,
+}: SimilarCoursesCarouselProps) {
   if (!courses?.length) return null;
 
   return (
     <section className="bg-[var(--color-gray-20)] py-20">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-2xl font-bold mb-10 text-gray-800">
+        <h2 className="mb-10 text-2xl font-bold text-gray-800">
           Similar Events
         </h2>
 
@@ -22,10 +24,10 @@ export default function SimilarCoursesCarousel({ courses }: SimilarCoursesCarous
           {courses.map((c) => (
             <Link
               key={c.id}
-              href={`/courses/${c.id}`}
-              className="group w-[260px] sm:w-[280px] md:w-[300px] transform transition hover:-translate-y-2"
+              href={`landing/courses/${c.id}`}
+              className="group w-[260px] transform transition hover:-translate-y-2 sm:w-[280px] md:w-[300px]"
             >
-              <div className="bg-white rounded-xl shadow-md hover:shadow-2xl transition overflow-hidden border border-gray-100">
+              <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-md transition hover:shadow-2xl">
                 {/* Bild */}
                 <div className="relative h-40 w-full overflow-hidden">
                   {c.imageUrl ? (
@@ -34,7 +36,7 @@ export default function SimilarCoursesCarousel({ courses }: SimilarCoursesCarous
                       alt={c.title}
                       fill
                       sizes="100vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
                     <div className="h-full w-full bg-gray-200" />
@@ -43,15 +45,15 @@ export default function SimilarCoursesCarousel({ courses }: SimilarCoursesCarous
 
                 {/* Textinhalt */}
                 <div className="p-4 text-left">
-                  <h3 className="font-bold text-base text-gray-900 line-clamp-1">
+                  <h3 className="line-clamp-1 text-base font-bold text-gray-900">
                     {c.title}
                   </h3>
                   {c.subtitle && (
-                    <p className="text-sm text-gray-600 mb-1 line-clamp-1">
+                    <p className="mb-1 line-clamp-1 text-sm text-gray-600">
                       {c.subtitle}
                     </p>
                   )}
-                  <p className="text-gray-700 text-sm line-clamp-2">
+                  <p className="line-clamp-2 text-sm text-gray-700">
                     {c.description}
                   </p>
                 </div>

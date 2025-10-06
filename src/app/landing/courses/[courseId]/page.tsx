@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Course } from "@/types/course";
 import CourseDetailPage from "@/components/course/CourseDetailPage";
-import { PageProps } from "../../../../.next/types/app/layout";
+import { PageProps } from "../../../../../.next/types/app/layout";
 
 interface CoursePageProps extends PageProps {
   params: Promise<{ courseId: string }>; // ✅ works in all cases

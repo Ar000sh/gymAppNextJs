@@ -56,7 +56,7 @@ const Benefits = () => {
   const router = useRouter();
 
   const handleClick = (id: string) => {
-    router.push(`/courses/${id}`);
+    router.push(`landing/courses/${id}`);
   };
 
   // ✅ Baue ein stabiles Array für Swiper mit Kurskarten

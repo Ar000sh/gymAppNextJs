@@ -17,8 +17,6 @@ export default function CourseDetailPage({
 }: CourseDetailPageProps) {
   return (
     <main className="pt-24">
-      <Navbar />
-
       {/* Hero background */}
       <div className="relative">
         <div className="relative h-[420px] w-full overflow-hidden md:h-[560px]">
@@ -60,8 +58,6 @@ export default function CourseDetailPage({
       {similarCourses.length > 0 && (
         <SimilarCoursesCarousel courses={similarCourses} />
       )}
-
-      <Footer />
     </main>
   );
 }

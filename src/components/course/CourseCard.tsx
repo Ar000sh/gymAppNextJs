@@ -66,10 +66,7 @@ export default function CourseCard({ course }: CourseCardProps) {
   }, [course.sessions]);
 
   return (
-    <motion.section
-      //whileHover={{ scale: 1.03 }}
-      className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg"
-    >
+    <motion.section className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg">
       <div className="grid grid-cols-1 md:grid-cols-2">
         {/* Left: textual and interactive info */}
         <div className="flex flex-col gap-4 p-5 md:p-8">

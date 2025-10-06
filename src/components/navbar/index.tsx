@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import NormalButton from "../buttons/normalButton";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 
@@ -53,12 +52,20 @@ export default function Navbar() {
 
   return (
     <nav>
-      <div className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}>
+      <div
+        className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}
+      >
         <div className={`${flexBetween} mx-auto w-5/6`}>
           <div className={`${flexBetween} w-full gap-16`}>
             {/* LEFT: Logo (ensure file exists at /public/assets/Logo.png) */}
             <div className="cursor-default">
-              <Image src="/assets/Logo.png" alt="logo" width={120} height={32} priority />
+              <Image
+                src="/assets/Logo.png"
+                alt="logo"
+                width={120}
+                height={32}
+                priority
+              />
             </div>
 
             {/* RIGHT */}
@@ -75,16 +82,24 @@ export default function Navbar() {
                 <div className="flex items-center gap-8">
                   {!user ? (
                     <>
-                      <Link href="/login" className="text-sm">Sign In</Link>
-                      <NormalButton
-                        onClick={() => (window.location.href = "/signup")}
+                      <Link
+                        href={{ pathname: "/auth/login" }}
+                        className="text-sm"
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        className="bg-secondary-500 hover:bg-primary-500 rounded-md px-10 py-2 hover:text-white"
+                        href={{ pathname: "/auth/signup" }}
                       >
                         Become a Member
-                      </NormalButton>
+                      </Link>
                     </>
                   ) : (
                     <>
-                      <span className="text-sm text-gray-700">Hi, {user.email}</span>
+                      <span className="text-sm text-gray-700">
+                        Hi, {user.email}
+                      </span>
                       <button
                         onClick={() => signOut()}
                         className="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
@@ -98,7 +113,7 @@ export default function Navbar() {
             ) : (
               // Mobile burger
               <button
-                className="rounded-full bg-secondary-500 p-2"
+                className="bg-secondary-500 rounded-full p-2"
                 onClick={() => setIsMenuToggled((v) => !v)}
                 aria-label="Open menu"
               >
@@ -113,13 +128,16 @@ export default function Navbar() {
       {!isAboveMediumScreens && isMenuToggled && (
         <div
           ref={panelRef}
-          className="fixed right-0 bottom-0 z-40 h-full w-[300px] bg-primary-100 drop-shadow-xl"
+          className="bg-primary-100 fixed right-0 bottom-0 z-40 h-full w-[300px] drop-shadow-xl"
           aria-modal="true"
           role="dialog"
         >
           {/* CLOSE ICON */}
           <div className="flex justify-end p-12">
-            <button onClick={() => setIsMenuToggled(false)} aria-label="Close menu">
+            <button
+              onClick={() => setIsMenuToggled(false)}
+              aria-label="Close menu"
+            >
               <XMarkIcon className="h-6 w-6 text-gray-400" />
             </button>
           </div>
@@ -134,19 +152,30 @@ export default function Navbar() {
             <div className="mt-6 flex flex-col gap-4 text-base">
               {!user ? (
                 <>
-                  <button onClick={() => { onSignIn(); setIsMenuToggled(false); }}>
+                  <button
+                    onClick={() => {
+                      onSignIn();
+                      setIsMenuToggled(false);
+                    }}
+                  >
                     Sign In
                   </button>
                   <button
-                    onClick={() => { onSignUp(); setIsMenuToggled(false); }}
-                    className="rounded-lg bg-secondary-500 px-4 py-2 text-white hover:bg-primary-500"
+                    onClick={() => {
+                      onSignUp();
+                      setIsMenuToggled(false);
+                    }}
+                    className="bg-secondary-500 hover:bg-primary-500 rounded-lg px-4 py-2 text-white"
                   >
                     Become a Member
                   </button>
                 </>
               ) : (
                 <button
-                  onClick={() => { onLogout(); setIsMenuToggled(false); }}
+                  onClick={() => {
+                    onLogout();
+                    setIsMenuToggled(false);
+                  }}
                   className="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
                 >
                   Logout

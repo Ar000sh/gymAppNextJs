@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import FormBuilder from "@/components/formBuilder";
 import type { FormField } from "@/shared/formTypes";
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 
 type Dict = Record<string, unknown>;
 
@@ -13,10 +14,9 @@ export default function SignupPage() {
   const [verifyEmailView, setVerifyEmailView] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
-
   const redirectTo =
     typeof window !== "undefined"
-      ? `${window.location.origin}/auth/callback`
+      ? `${window.location.origin}/callback`
       : "/auth/callback";
 
   const fields: FormField[] = [
@@ -77,7 +77,7 @@ export default function SignupPage() {
       <div className="rounded-2xl bg-white p-5 shadow-2xl">
         {!verifyEmailView ? (
           <>
-            <h1 className="mb-6 text-2xl font-montserrat">Sign up</h1>
+            <h1 className="font-montserrat mb-6 text-2xl">Sign up</h1>
 
             <FormBuilder
               fields={fields}
@@ -89,7 +89,7 @@ export default function SignupPage() {
                 const password = getLoose(data, "password") as string;
                 const verifyPassword = getLoose(
                   data,
-                  "verifyPassword"
+                  "verifyPassword",
                 ) as string;
 
                 if (password !== verifyPassword) {
@@ -119,12 +119,15 @@ export default function SignupPage() {
             />
 
             {formError && (
-              <p className="mt-3 text-sm text-primary-500">{formError}</p>
+              <p className="text-primary-500 mt-3 text-sm">{formError}</p>
             )}
 
             <p className="mt-4 text-sm">
               Have an account?{" "}
-              <Link href="/login" className="text-primary-500">
+              <Link
+                href={{ pathname: "/auth/login" }}
+                className="text-primary-500"
+              >
                 Log in
               </Link>
             </p>
