@@ -4,7 +4,7 @@ import type { Course } from "@/types/course";
 import CourseDetailPage from "@/components/course/CourseDetailPage";
 
 interface CoursePageProps {
-  params: { courseId: string };
+  params: Promise<{ courseId: string }> | { courseId: string }; // ✅ works in all cases
 }
 
 function readCourses(): Course[] {
@@ -14,7 +14,7 @@ function readCourses(): Course[] {
 }
 
 export default async function Page({ params }: CoursePageProps) {
-  const { courseId } = await params;
+  const { courseId } = await params; // ✅ handles Promise or plain object
   const courses = readCourses();
   const course = courses.find((c) => c.id === courseId);
 
