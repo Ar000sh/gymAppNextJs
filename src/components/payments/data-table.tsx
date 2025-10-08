@@ -37,7 +37,6 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [filtersHeight, setFiltersHeight] = useState(0);
   const [tableHeight, setTableHeight] = useState("650px");
 
   const handleOnSetFilterHeight = (height: number) => {
@@ -67,14 +66,6 @@ export function DataTable<TData, TValue>({
             table={table}
             onSetActiveFilters={handleOnSetFilterHeight}
           />
-          {/*<Input
-            placeholder="Filter emails..."
-            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("email")?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          /> */}
         </div>
         <div className="overflow-hidden rounded-md border">
           <Table className="table-fixed">

@@ -3,13 +3,14 @@
 
 import * as React from "react";
 import type { Table as RTTable, Column } from "@tanstack/react-table";
+import type { CheckedState } from "@radix-ui/react-checkbox";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuCheckboxItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
@@ -22,36 +23,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect } from "react";
-
-type AnyTable = RTTable<any>;
 
 type FilterVariant = "text" | "number" | "select";
-
-function getFilterVariant(col: Column<any, unknown>): FilterVariant {
-  return (col.columnDef.meta as any)?.filterVariant ?? "text";
-}
-
-function getSelectOptions(
-  col: Column<any, unknown>,
-): readonly string[] | undefined {
-  return (col.columnDef.meta as any)?.options;
-}
-
-type props = {
-  table: AnyTable;
-  onSetActiveFilters: (height: any) => void;
+type ColumnMeta = {
+  filterVariant?: FilterVariant;
+  options?: readonly string[];
 };
-export function DataTableToolbar({ table, onSetActiveFilters }: props) {
+
+function resolveMeta<TData>(col: Column<TData, unknown>): ColumnMeta {
+  return (col.columnDef.meta as ColumnMeta) ?? {};
+}
+
+function getFilterVariant<TData>(col: Column<TData, unknown>): FilterVariant {
+  return resolveMeta(col).filterVariant ?? "text";
+}
+
+function getSelectOptions<TData>(
+  col: Column<TData, unknown>,
+): readonly string[] | undefined {
+  return resolveMeta(col).options;
+}
+
+type ToolbarProps<TData> = {
+  table: RTTable<TData>;
+  onSetActiveFilters: (height: number) => void;
+};
+
+export function DataTableToolbar<TData>({
+  table,
+  onSetActiveFilters,
+}: ToolbarProps<TData>) {
   const columns = table.getAllLeafColumns().filter((c) => c.getCanFilter());
 
-  // Which columns have an active filter UI showing:
   const [activeFilters, setActiveFilters] = React.useState<string[]>([]);
   const [open, setOpen] = React.useState(false);
   const filtersRef = React.useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    // If no active filters, there is no container in the DOM
+  // Measure the filters container height and report it up
+  React.useEffect(() => {
     if (activeFilters.length === 0) {
       onSetActiveFilters(0);
       return;
@@ -61,25 +70,22 @@ export function DataTableToolbar({ table, onSetActiveFilters }: props) {
     let rafId: number | null = null;
 
     const measure = () => {
-      // defer to the next frame to ensure DOM has painted
       rafId = window.requestAnimationFrame(() => {
         const h = filtersRef.current?.clientHeight ?? 0;
         onSetActiveFilters(h);
       });
     };
 
-    // First measurement after render
     measure();
 
-    // Keep in sync for any size changes
     if (filtersRef.current && "ResizeObserver" in window) {
-      ro = new ResizeObserver(() => measure());
+      ro = new ResizeObserver(measure);
       ro.observe(filtersRef.current);
     }
 
     return () => {
       if (rafId !== null) window.cancelAnimationFrame(rafId);
-      if (ro) ro.disconnect();
+      ro?.disconnect();
     };
   }, [activeFilters, onSetActiveFilters]);
 
@@ -95,6 +101,12 @@ export function DataTableToolbar({ table, onSetActiveFilters }: props) {
     table.resetColumnFilters();
   };
 
+  const labelFor = (col: Column<TData, unknown>): string => {
+    const header = col.columnDef.header;
+    // Keep it strict: only accept string headers; otherwise use the column id.
+    return typeof header === "string" ? header : col.id;
+  };
+
   return (
     <div className="flex flex-col gap-3">
       {/* Top row: Filter dropdown + Clear */}
@@ -108,24 +120,26 @@ export function DataTableToolbar({ table, onSetActiveFilters }: props) {
             <DropdownMenuSeparator />
             {columns.map((col) => {
               const id = col.id;
-              const label =
-                (typeof col.columnDef.header === "string"
-                  ? col.columnDef.header
-                  : (col.columnDef.header as any)?.props?.children) ?? id;
+              const label = labelFor(col);
+              const isActive = activeFilters.includes(id);
 
               return (
                 <DropdownMenuItem
                   key={`MenuItem-${id}`}
+                  // Prevent closing the menu when clicking inside
                   onClick={(e) => e.preventDefault()}
                 >
                   <Checkbox
                     className="data-[state=checked]:[&>span>svg]:!text-white"
-                    key={id}
-                    checked={activeFilters.includes(id)}
+                    checked={isActive}
+                    // Radix type = boolean | "indeterminate"
+                    onCheckedChange={(v: CheckedState) =>
+                      toggleActive(id, v === true)
+                    }
+                    // Prevent space/enter from closing
                     onSelect={(e) => e.preventDefault()}
-                    onCheckedChange={(v) => toggleActive(id, Boolean(v))}
-                  ></Checkbox>
-                  {label}
+                  />
+                  <span className="ml-2">{label}</span>
                 </DropdownMenuItem>
               );
             })}
@@ -135,7 +149,7 @@ export function DataTableToolbar({ table, onSetActiveFilters }: props) {
         <Button
           variant="ghost"
           onClick={clearAll}
-          disabled={activeFilters.length <= 0}
+          disabled={activeFilters.length === 0}
         >
           Clear all
         </Button>
@@ -153,12 +167,7 @@ export function DataTableToolbar({ table, onSetActiveFilters }: props) {
             if (!col) return null;
 
             const variant = getFilterVariant(col);
-
-            // Label
-            const label =
-              (typeof col.columnDef.header === "string"
-                ? col.columnDef.header
-                : (col.columnDef.header as any)?.props?.children) ?? id;
+            const label = labelFor(col);
 
             if (variant === "select") {
               const options = getSelectOptions(col) ?? [];
@@ -186,9 +195,8 @@ export function DataTableToolbar({ table, onSetActiveFilters }: props) {
             }
 
             if (variant === "number") {
-              // Example: min/max pair
-              const value =
-                (col.getFilterValue() as { min?: string; max?: string }) ?? {};
+              type Range = { min?: string; max?: string };
+              const value: Range = (col.getFilterValue() as Range) ?? {};
               return (
                 <div key={id} className="flex items-center gap-2">
                   <span className="text-sm text-gray-600">{label}:</span>
@@ -225,7 +233,7 @@ export function DataTableToolbar({ table, onSetActiveFilters }: props) {
             return (
               <div key={id} className="flex items-center gap-2">
                 <Input
-                  placeholder={label as string}
+                  placeholder={label}
                   className="w-56"
                   value={(col.getFilterValue() as string) ?? ""}
                   onChange={(e) =>
