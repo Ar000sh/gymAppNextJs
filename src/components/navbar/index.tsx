@@ -74,10 +74,16 @@ export default function Navbar() {
               // Desktop
               <div className={`${flexBetween} w-full`}>
                 <div className="flex items-center gap-8 text-sm">
-                  <span className="opacity-80">Home</span>
-                  <span className="opacity-80">Benefits</span>
-                  <span className="opacity-80">Our Classes</span>
-                  <span className="opacity-80">Contact Us</span>
+                  <Link
+                    className="hover:text-primary-500"
+                    href={{ pathname: "/landing/payments" }}
+                  >
+                    Payments
+                  </Link>
+                  <span className="hover:text-primary-500">Home</span>
+                  <span className="hover:text-primary-500">Benefits</span>
+                  <span className="hover:text-primary-500">Our Classes</span>
+                  <span className="hover:text-primary-500">Contact Us</span>
                 </div>
 
                 <div className="flex items-center gap-8">
