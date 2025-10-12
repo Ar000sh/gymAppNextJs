@@ -123,6 +123,7 @@ const Benefits = () => {
             spaceBetween={5}
             maxWidth={400}
             containerStyles=""
+            swiperSlidStyles="py-2"
             enablePagination={true}
             loop={true}
             enableNavigation={true}

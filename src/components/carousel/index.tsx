@@ -172,6 +172,7 @@ type Props = {
   elements: React.ReactElement[];
   spaceBetween: number;
   containerStyles: string;
+  swiperSlidStyles?: string;
   maxWidth: number;
   enableNavigation?: boolean;
   enablePagination?: boolean;
@@ -185,6 +186,7 @@ const Carousel = ({
   elements,
   spaceBetween = 50,
   containerStyles = "",
+  swiperSlidStyles,
   maxWidth = 450,
   enableNavigation,
   enablePagination,
@@ -284,8 +286,7 @@ const Carousel = ({
         >
           {elements.map((el, i) => (
             <SwiperSlide
-              className="!flex h-full !items-center !justify-center"
-              key={el.key ?? i}
+              className={`flex items-center ${swiperSlidStyles ? swiperSlidStyles : ""}`}
             >
               {el}
             </SwiperSlide>
