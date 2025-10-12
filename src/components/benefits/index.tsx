@@ -34,20 +34,26 @@ const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
       variants={childVariant}
       whileHover={{ scale: 1.03 }}
       onClick={onClick}
-      className="cursor-pointer rounded-md border-2 border-gray-100 bg-white px-5 py-8 text-center transition hover:shadow-lg"
+      className="h-[660px] flex flex-col justify-between cursor-pointer rounded-md border-2 border-gray-100 bg-white px-5 py-6 text-center transition hover:shadow-lg"
     >
-      <div className="mb-4 flex justify-center">
-        <img
-          src={course.imageUrl}
-          alt={course.title}
-          className="h-48 w-full rounded-lg object-cover"
-        />
-      </div>
+      <div>
+        <div className="mb-4 flex justify-center">
+          <div className="h-48 w-full overflow-hidden rounded-lg">
+            <img
+              src={course.imageUrl}
+              alt={course.title}
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
 
-      <h4 className="text-lg font-bold">{course.title}</h4>
-      <p className="my-3 line-clamp-3 text-sm text-gray-600">
-        {course.description}
-      </p>
+        <div className="flex-grow">
+          <h4 className="text-lg font-bold leading-tight">{course.title}</h4>
+          <p className="my-3 line-clamp-3 text-sm text-gray-600">
+            {course.description}
+          </p>
+        </div>
+      </div>
 
       <p className="text-primary-500 mt-4 font-semibold">Learn More →</p>
     </motion.div>
