@@ -286,6 +286,7 @@ const Carousel = ({
         >
           {elements.map((el, i) => (
             <SwiperSlide
+              key={i}
               className={`flex items-center ${swiperSlidStyles ? swiperSlidStyles : ""}`}
             >
               {el}
