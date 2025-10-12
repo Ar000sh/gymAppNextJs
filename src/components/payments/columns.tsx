@@ -27,6 +27,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "status",
     //minSize: 40,
     //size: 40,
+    meta: { filterVariant: "text" },
     header: () => <div className="text-left">Status</div>,
     cell: ({ row }) => {
       return (
@@ -38,6 +39,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "email",
     //minSize: 220,
     //size: 50,
+    meta: { filterVariant: "text" },
     header: ({ column }) => {
       return (
         <div className="text-left">
@@ -62,6 +64,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "amount",
     //minSize: 120,
     //size: 50,
+    meta: { filterVariant: "text" },
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"));

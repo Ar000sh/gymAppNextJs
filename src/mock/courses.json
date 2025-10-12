@@ -40,7 +40,7 @@
     "endDate": "2026-01-15",
     "endTime": "08:15",
     "ageRestriction": "ADULT_18_PLUS",
-    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "address": "CityGym Hannover, Lister Meile 50, 30161 Hannover",
     "email": "hiit-express@example.com",
     "sessions": [
       {
@@ -69,7 +69,7 @@
     "endDate": "2025-12-20",
     "endTime": "20:00",
     "ageRestriction": "NO_RESTRICTION",
-    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "address": "SportLoft Hannover, Limmerstraße 77, 30451 Hannover",
     "email": "yoga-mobility@example.com",
     "sessions": [
       {
@@ -92,7 +92,7 @@
     "endDate": "2026-01-10",
     "endTime": "19:30",
     "ageRestriction": "NO_RESTRICTION",
-    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "address": "VitalFit Hannover, Hildesheimer Str. 265, 30519 Hannover",
     "email": "cycling-power@example.com",
     "sessions": [
       {
@@ -115,7 +115,7 @@
     "endDate": "2025-12-15",
     "endTime": "18:30",
     "ageRestriction": "ADULT_18_PLUS",
-    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "address": "PowerGym Hannover, Podbielskistraße 200, 30177 Hannover",
     "email": "barbell-tech@example.com",
     "sessions": [
       {
@@ -161,7 +161,7 @@
     "endDate": "2026-01-18",
     "endTime": "10:30",
     "ageRestriction": "NO_RESTRICTION",
-    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "address": "Athletik Club Hannover, Ricklinger Stadtweg 20, 30459 Hannover",
     "email": "cross-functional@example.com",
     "sessions": [
       {
@@ -184,7 +184,7 @@
     "endDate": "2025-12-22",
     "endTime": "19:30",
     "ageRestriction": "NO_RESTRICTION",
-    "address": "FitX Hannover, Vahrenwalder Str. 257, 30179 Hannover",
+    "address": "VitalFit Hannover, Hildesheimer Str. 265, 30519 Hannover",
     "email": "zumba-energy@example.com",
     "sessions": [
       {

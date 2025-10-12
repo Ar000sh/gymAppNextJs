@@ -7,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 
 export default function Navbar() {
-  const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
+  const isAboveMediumScreens: boolean = useMediaQuery("(min-width: 1060px)");
   const [isMenuToggled, setIsMenuToggled] = useState(false);
   const [isTopOfPage, setIsTopOfPage] = useState(true);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -80,9 +80,13 @@ export default function Navbar() {
                   >
                     Payments
                   </Link>
-                  <span className="hover:text-primary-500">Home</span>
+                  <Link
+                    className="hover:text-primary-500"
+                    href={{ pathname: "/landing/courses" }}
+                  >
+                    Courses
+                  </Link>
                   <span className="hover:text-primary-500">Benefits</span>
-                  <span className="hover:text-primary-500">Our Classes</span>
                   <span className="hover:text-primary-500">Contact Us</span>
                 </div>
 
@@ -91,7 +95,7 @@ export default function Navbar() {
                     <>
                       <Link
                         href={{ pathname: "/auth/login" }}
-                        className="text-sm"
+                        className="hover:text-primary-500 text-sm"
                       >
                         Sign In
                       </Link>
@@ -150,43 +154,51 @@ export default function Navbar() {
           </div>
 
           {/* MENU ITEMS */}
-          <div className="ml-[33%] flex flex-col gap-10 text-2xl">
-            <span>Home</span>
-            <span>Benefits</span>
-            <span>Our Classes</span>
-            <span>Contact Us</span>
+          <div className="ml-[33%] flex flex-col gap-10 text-sm">
+            {user && (
+              <span className="text-sm text-gray-700">Hi, {user.email}</span>
+            )}
 
-            <div className="mt-6 flex flex-col gap-4 text-base">
+            <Link
+              className="hover:text-primary-500"
+              href={{ pathname: "/landing/payments" }}
+            >
+              Payments
+            </Link>
+            <Link
+              className="hover:text-primary-500"
+              href={{ pathname: "/landing/courses" }}
+            >
+              Courses
+            </Link>
+            <span className="hover:text-primary-500">Benefits</span>
+            <span className="hover:text-primary-500">Contact Us</span>
+
+            <div className="mt-6 flex flex-col items-start gap-4">
               {!user ? (
                 <>
-                  <button
-                    onClick={() => {
-                      onSignIn();
-                      setIsMenuToggled(false);
-                    }}
+                  <Link
+                    className="hover:text-primary-500"
+                    href={{ pathname: "/auth/login" }}
                   >
                     Sign In
-                  </button>
-                  <button
-                    onClick={() => {
-                      onSignUp();
-                      setIsMenuToggled(false);
-                    }}
-                    className="bg-secondary-500 hover:bg-primary-500 rounded-lg px-4 py-2 text-white"
+                  </Link>
+                  <Link
+                    className="hover:text-primary-500"
+                    href={{ pathname: "/auth/signup" }}
                   >
                     Become a Member
-                  </button>
+                  </Link>
                 </>
               ) : (
-                <button
-                  onClick={() => {
-                    onLogout();
-                    setIsMenuToggled(false);
-                  }}
-                  className="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
-                >
-                  Logout
-                </button>
+                <>
+                  <button
+                    onClick={() => signOut()}
+                    className="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
+                  >
+                    Logout
+                  </button>
+                </>
               )}
             </div>
           </div>

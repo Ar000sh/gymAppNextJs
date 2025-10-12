@@ -29,16 +29,24 @@ import { DataTableToolbar } from "./data-table-toolbar";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  allowedFilters: string[];
+  withOutHeader?: boolean;
+  withOutBorder?: boolean;
+  withOutRowDividers?: boolean;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  allowedFilters,
+  withOutHeader,
+  withOutBorder,
+  withOutRowDividers,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [tableHeight, setTableHeight] = useState("650px");
-
+  //const allowedFilters = ["status", "email"];
   const handleOnSetFilterHeight = (height: number) => {
     setTableHeight(`${650 + height}px`);
   };
@@ -64,41 +72,44 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center py-4">
           <DataTableToolbar
             table={table}
+            allowedFilters={allowedFilters}
             onSetActiveFilters={handleOnSetFilterHeight}
           />
         </div>
-        <div className="overflow-hidden rounded-md border">
+        <div
+          className={`overflow-hidden rounded-md ${withOutBorder ? "" : "border"}`}
+        >
           <Table className="table-fixed">
             <colgroup>
               {leafCols.map((col) => (
-                <col
-                  key={col.id}
-                  style={{ width: col.getSize() }} // <- this is the magic
-                />
+                <col key={col.id} style={{ width: col.getSize() }} />
               ))}
             </colgroup>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
+            {!withOutHeader && (
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      );
+                    })}
+                  </TableRow>
+                ))}
+              </TableHeader>
+            )}
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
                   <TableRow
+                    className={`${withOutRowDividers ? "border-0" : ""}`}
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
                   >

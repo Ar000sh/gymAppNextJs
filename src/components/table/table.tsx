@@ -1,9 +1,13 @@
 "use client";
 
-import { columns, type Payment } from "./columns";
-import { DataTable } from "./data-table";
+import { ColumnDef } from "@tanstack/react-table";
+import { DataTable } from "../payments/data-table";
+import { Payment } from "../payments/columns";
+//import { columns, type Payment } from "./columns";
+//import { DataTable } from "./data-table";
 
 //"pending" | "processing" | "success" | "failed"
+
 function getData(): Payment[] {
   return [
     {
@@ -99,16 +103,35 @@ function getData(): Payment[] {
   ];
 }
 
-export default function Table() {
-  const data = getData();
-  const allowedFilters = ["status", "email"];
+interface TableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  allowedFilters: string[];
+  withOutHeader?: boolean;
+  withOutBorder?: boolean;
+  withOutRowDividers?: boolean;
+}
+export default function Table<TData, TValue>({
+  columns,
+  data,
+  allowedFilters,
+  withOutHeader,
+  withOutBorder,
+  withOutRowDividers,
+}: TableProps<TData, TValue>) {
+  //const data = getData();
+
+  console.log("data length: ", data.length);
   return (
     <div className="h-full w-full bg-white">
       <div className="container mx-auto py-10">
         <DataTable
           columns={columns}
-          data={data}
+          data={data as TData[]}
           allowedFilters={allowedFilters}
+          withOutHeader={withOutHeader}
+          withOutBorder={withOutBorder}
+          withOutRowDividers={withOutRowDividers}
         />
       </div>
     </div>

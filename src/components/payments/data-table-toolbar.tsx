@@ -46,14 +46,19 @@ function getSelectOptions<TData>(
 
 type ToolbarProps<TData> = {
   table: RTTable<TData>;
+  allowedFilters: string[];
   onSetActiveFilters: (height: number) => void;
 };
 
 export function DataTableToolbar<TData>({
   table,
+  allowedFilters,
   onSetActiveFilters,
 }: ToolbarProps<TData>) {
-  const columns = table.getAllLeafColumns().filter((c) => c.getCanFilter());
+  const columns = table.getAllLeafColumns().filter((c) => {
+    console.log("C: ", c.id);
+    return c.getCanFilter() && allowedFilters.includes(c.id);
+  });
 
   const [activeFilters, setActiveFilters] = React.useState<string[]>([]);
   const [open, setOpen] = React.useState(false);
