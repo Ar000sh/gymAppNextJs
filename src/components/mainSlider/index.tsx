@@ -1,0 +1,141 @@
+import { Course } from "@/types/course";
+import Image from "next/image";
+import DoupleSlid from "./doupleSlid";
+import eventPlaceholder from "/assets/eventPlaceholder.png";
+
+import { NavigationShape } from "@/shared/swipper";
+import Carousel from "../carousel";
+
+type Props = {
+  courses: Course[];
+};
+
+function chunk<T>(arr: T[], size = 2): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+  return out;
+}
+
+function Placeholder() {
+  return (
+    <div className="flex h-fit w-fit flex-col gap-1 !px-0.5 py-0.5">
+      <div className="relative h-[200px] w-[150px] transform-gpu transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl">
+        <Image
+          src={"/eventPlaceholder_gray_border.png"}
+          alt={"image"}
+          fill
+          sizes="150px"
+          className="object-cover"
+          priority={false}
+        />
+      </div>
+      <div className="relative h-[200px] w-[150px] transform-gpu transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl">
+        <Image
+          src={"/eventPlaceholder_gray_border.png"}
+          alt={"image"}
+          fill
+          sizes="150px"
+          className="object-cover"
+          priority={false}
+        />
+      </div>
+    </div>
+  );
+}
+/** one tile (handles missing course or missing image) */
+function Tile({ course }: { course?: Course }) {
+  const hasImg = !!course?.imageUrl;
+  return (
+    <div className="relative h-[200px] w-[150px] transform-gpu transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl">
+      {hasImg ? (
+        <Image
+          src={course!.imageUrl!}
+          alt={course?.title ?? "image"}
+          fill
+          sizes="150px"
+          className="object-cover"
+          priority={false}
+        />
+      ) : (
+        <Image
+          src={"/eventPlaceholder_gray_border.png"}
+          alt={"image"}
+          fill
+          sizes="150px"
+          className="object-cover"
+          priority={false}
+        />
+      )}
+    </div>
+  );
+}
+
+// B 150 L 200
+const MainSlider = ({ courses }: Props) => {
+  const swipperArray = chunk(courses, 2).map((pair, idx) => {
+    const [c1, c2] = pair; // c2 may be undefined if odd length
+    return (
+      <div key={idx} className="flex h-fit w-fit flex-col gap-1 !px-0.5 py-0.5">
+        <Tile course={c1} />
+        <Tile course={c2} />
+      </div>
+    );
+  });
+  return (
+    <div className="flex flex-row gap-2 border-2 border-red-400">
+      <div className="flex h-fit w-fit flex-col gap-1 !px-0.5 py-0.5">
+        <div className="relative h-[200px] w-[315px] transform-gpu transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl">
+          <Image
+            src={"/eventPlaceholder_gray_border.png"}
+            alt={"image"}
+            fill
+            sizes="150px"
+            className="object-cover"
+            priority={false}
+          />
+        </div>
+        <div className="relative h-[200px] w-[315px] transform-gpu transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl">
+          <Image
+            src={"/eventPlaceholder_gray_border.png"}
+            alt={"image"}
+            fill
+            sizes="150px"
+            className="object-cover"
+            priority={false}
+          />
+        </div>
+      </div>
+      <div className="min-w-0 flex-1">
+        <Carousel
+          elements={swipperArray}
+          placeHolderElement={<Placeholder />}
+          spaceBetween={2}
+          maxWidth={150}
+          containerStyles=""
+          enablePagination
+          enableNavigation
+          loop
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            reverseDirection: true,
+          }}
+          allowPartailSlides
+          navigationOptions={{
+            size: "44px",
+            iconSize: "22px",
+            iconColor: "white",
+            backgroundColor: "black",
+            backgroundHoverColor: "#897f33",
+            shape: NavigationShape.circle,
+            iconOffsetX: "2px",
+            showOnHover: true,
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default MainSlider;

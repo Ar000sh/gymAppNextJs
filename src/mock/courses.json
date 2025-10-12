@@ -194,5 +194,28 @@
         "endTime": "19:30"
       }
     ]
+  },
+  {
+    "id": "c009",
+    "category": "Cardio",
+    "title": "Yoga & Mobility Flow",
+    "subtitle": "Flexibility and Recovery",
+    "description": "Enhance joint range of motion, reduce stiffness, and improve posture with guided flows. Ideal as a complement to strength and endurance work.",
+    "imageUrl": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=620&h=874&fit=crop&q=80",
+    "startDate": "2025-10-20",
+    "startTime": "19:00",
+    "endDate": "2025-12-20",
+    "endTime": "20:00",
+    "ageRestriction": "NO_RESTRICTION",
+    "address": "SportLoft Hannover, Limmerstraße 77, 30451 Hannover",
+    "email": "yoga-mobility@example.com",
+    "sessions": [
+      {
+        "startDate": "2025-10-20",
+        "startTime": "19:00",
+        "endDate": "2025-10-20",
+        "endTime": "20:00"
+      }
+    ]
   }
 ]

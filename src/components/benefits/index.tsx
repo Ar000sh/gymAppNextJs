@@ -10,6 +10,8 @@ import NormalButton from "../buttons/normalButton";
 import { NavigationPosition, NavigationShape } from "@/shared/swipper";
 import type { Course } from "@/types/course";
 import React from "react";
+import DoupleSlid from "../mainSlider/doupleSlid";
+import MainSlider from "../mainSlider";
 
 const container = {
   hidden: {},
@@ -91,6 +93,10 @@ const Benefits = () => {
             learn more and get started.
           </p>
         </motion.div>
+
+        <div>
+          <MainSlider courses={coursesData as Course[]} />
+        </div>
 
         {/* COURSE GRID */}
         <motion.div

@@ -150,10 +150,27 @@ const extractPaginationOptions = (
   };
 };
 
+function numberOfSlidesToBeAdded(
+  numberOfSlidPerView: number,
+  slidesNumber: number,
+) {
+  const num = Math.ceil(numberOfSlidPerView);
+  if (numberOfSlidPerView <= slidesNumber) return 0;
+
+  console.log(
+    "numberOfSlidPerView: ",
+    numberOfSlidPerView,
+    " slidesNumber: ",
+    slidesNumber,
+  );
+
+  return num - slidesNumber;
+}
 function computeSlidesPerView(
   width: number,
   spaceBetween: number,
   itemMinWidth: number,
+  allowPartail: boolean,
 ) {
   const innerWidth = Math.max(0, width);
   if (innerWidth === 0) return 1;
@@ -163,13 +180,16 @@ function computeSlidesPerView(
   const effectiveCard = itemMinWidth + spaceBetween;
   const raw = innerWidth / effectiveCard;
 
+  console.log("raw: ", raw);
+
   // Ensure at least one slide is visible; allow fractional for preview.
   const slideWidth = Math.max(1, raw);
-  //console.log("slideWidth: ", slideWidth)
-  return Math.floor(slideWidth);
+  console.log("slideWidth: ", slideWidth);
+  return allowPartail ? slideWidth : Math.floor(slideWidth);
 }
 type Props = {
   elements: React.ReactElement[];
+  placeHolderElement?: React.ReactElement;
   spaceBetween: number;
   containerStyles: string;
   swiperSlidStyles?: string;
@@ -181,9 +201,11 @@ type Props = {
   enableScrollbar?: boolean;
   loop?: boolean;
   autoplay?: boolean | SwiperAutoplayOptionsType;
+  allowPartailSlides?: boolean;
 };
 const Carousel = ({
   elements,
+  placeHolderElement,
   spaceBetween = 50,
   containerStyles = "",
   swiperSlidStyles,
@@ -195,6 +217,7 @@ const Carousel = ({
   loop,
   navigationOptions,
   autoplay,
+  allowPartailSlides,
 }: Props) => {
   const { ref: containerRef, width: measuredWidth } =
     useMeasuredWidth<HTMLDivElement>();
@@ -231,7 +254,12 @@ const Carousel = ({
   const autoplayConfig: SwiperAutoplayOptionsType | boolean =
     typeof autoplay === "boolean"
       ? autoplay
-        ? { delay: 1000, disableOnInteraction: false, pauseOnMouseEnter: true }
+        ? {
+            delay: 1000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+            reverseDirection: true,
+          }
         : false
       : autoplay || false;
 
@@ -239,7 +267,19 @@ const Carousel = ({
     measuredWidth,
     spaceBetween,
     maxWidth,
+    allowPartailSlides ?? false,
   );
+
+  console.log("slidesPerView: ", slidesPerView);
+  if (allowPartailSlides && placeHolderElement) {
+    const toBeAdded = numberOfSlidesToBeAdded(slidesPerView, elements.length);
+    if (toBeAdded > 0) {
+      for (let i = 0; i < toBeAdded; i++) {
+        elements.push(placeHolderElement);
+      }
+    }
+    console.log("toBeAdded: ", toBeAdded);
+  }
 
   const navStyleVars = buildNavigationCSSVars(navigationOptions);
 
@@ -249,6 +289,8 @@ const Carousel = ({
       initExternalNavigation(sw, prevRef.current, nextRef.current);
     }
   };
+
+  console.log("loop: ", loop);
 
   const barClassBase = `flex items-center`;
   //console.log("slidesPerView: ", slidesPerView)
@@ -276,6 +318,7 @@ const Carousel = ({
           style={navStyleVars}
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={spaceBetween}
+          slidesOffsetBefore={0}
           slidesPerView={slidesPerView}
           navigation={navigation}
           pagination={pagination}

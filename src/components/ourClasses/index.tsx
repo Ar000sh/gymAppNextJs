@@ -1,5 +1,5 @@
 "use client";
-import {  type ClassType } from "@/shared/types";
+import { type ClassType } from "@/shared/types";
 
 import { motion } from "framer-motion";
 import HText from "@/shared/HText";
@@ -43,29 +43,27 @@ const classes: ClassType[] = [
 ];
 
 const OurClasses = () => {
-
-  const populateSwiperArray = (array: ClassType[]) : React.ReactElement[] => {
+  const populateSwiperArray = (array: ClassType[]): React.ReactElement[] => {
     const swipperArray: JSX.Element[] = [];
-    array.map((item, index) => (
+    array.map((item, index) =>
       swipperArray.push(
         <Class
-        key={`${item.name}-${index}`}
-        name={item.name}
-        description={item.description}
-        image={item.image}
-      />
-      )
-      ));
-      return swipperArray;
+          key={`${item.name}-${index}`}
+          name={item.name}
+          description={item.description}
+          image={item.image}
+        />,
+      ),
+    );
+    return swipperArray;
   };
 
   const swipperArray = populateSwiperArray(classes);
 
-  console.log("swipperArray: ", swipperArray)
+  console.log("swipperArray: ", swipperArray);
   return (
-    <section id="ourclasses" className="w-full bg-primary-100 py-40">
-      <motion.div
-      >
+    <section id="ourclasses" className="bg-primary-100 w-full py-40">
+      <motion.div>
         <motion.div
           className="mx-auto w-5/6"
           initial="hidden"
@@ -87,9 +85,9 @@ const OurClasses = () => {
             </p>
           </div>
         </motion.div>
-        
+
         <div className="">
-          <Carousel elements={swipperArray} spaceBetween={10} maxWidth={400} containerStyles="px-7"   />
+          {/*<Carousel elements={swipperArray} spaceBetween={10} maxWidth={400} containerStyles="px-7"   /> */}
         </div>
       </motion.div>
     </section>
