@@ -87,7 +87,12 @@ const OurClasses = () => {
         </motion.div>
 
         <div className="">
-          {/*<Carousel elements={swipperArray} spaceBetween={10} maxWidth={400} containerStyles="px-7"   /> */}
+          <Carousel
+            elements={swipperArray}
+            spaceBetween={10}
+            maxWidth={400}
+            containerStyles="px-7"
+          />
         </div>
       </motion.div>
     </section>
