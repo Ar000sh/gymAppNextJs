@@ -82,8 +82,8 @@ const MainSlider = ({ courses }: Props) => {
     );
   });
   return (
-    <div className="flex flex-row gap-2 border-2 border-red-400">
-      <div className="flex h-fit w-fit flex-col gap-1 !px-0.5 py-0.5">
+    <div className="flex flex-col gap-2 shadow-2xl md:flex-row">
+      <div className="mx-auto flex h-fit w-fit flex-col items-center gap-2 px-0.5 py-0.5 pt-3 sm:mx-auto sm:w-full sm:flex-row sm:items-center sm:justify-center sm:gap-8 sm:pt-3 md:mx-0 md:w-fit md:flex-col md:items-stretch md:justify-start md:gap-1 md:pt-0.5">
         <div className="relative h-[200px] w-[315px] transform-gpu transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl">
           <Image
             src={"/eventPlaceholder_gray_border.png"}

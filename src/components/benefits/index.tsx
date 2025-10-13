@@ -12,6 +12,7 @@ import type { Course } from "@/types/course";
 import React from "react";
 import DoupleSlid from "../mainSlider/doupleSlid";
 import MainSlider from "../mainSlider";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 const container = {
   hidden: {},
@@ -30,12 +31,13 @@ const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <motion.div
-      variants={childVariant}
-      whileHover={{ scale: 1.03 }}
-      onClick={onClick}
-      className="h-[660px] flex flex-col justify-between cursor-pointer rounded-md border-2 border-gray-100 bg-white px-5 py-6 text-center transition hover:shadow-lg"
-    >
+    <div className="flex h-[406px] cursor-pointer flex-col justify-between rounded-md border-2 border-gray-100 bg-white px-5 py-6 text-center transition hover:scale-103 hover:shadow-lg">
+      {/*      <motion.div
+        variants={childVariant}
+        whileHover={{ scale: 1.03 }}
+        onClick={onClick}
+        className="flex min-h-[406px] cursor-pointer flex-col justify-between rounded-md border-2 border-gray-100 bg-white px-5 py-6 text-center transition hover:shadow-lg"
+      >*/}
       <div>
         <div className="mb-4 flex justify-center">
           <div className="h-48 w-full overflow-hidden rounded-lg">
@@ -48,7 +50,7 @@ const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
         </div>
 
         <div className="flex-grow">
-          <h4 className="text-lg font-bold leading-tight">{course.title}</h4>
+          <h4 className="text-lg leading-tight font-bold">{course.title}</h4>
           <p className="my-3 line-clamp-3 text-sm text-gray-600">
             {course.description}
           </p>
@@ -56,12 +58,14 @@ const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
       </div>
 
       <p className="text-primary-500 mt-4 font-semibold">Learn More →</p>
-    </motion.div>
+      {/* </motion.div> */}
+    </div>
   );
 };
 
 const Benefits = () => {
   const router = useRouter();
+  const isAboveSmallScreens = useMediaQuery("(min-width: 768px)");
 
   const handleClick = (id: string) => {
     router.push(`landing/courses/${id}`);
@@ -99,36 +103,64 @@ const Benefits = () => {
             learn more and get started.
           </p>
         </motion.div>
-
-        <div>
-          <MainSlider courses={coursesData as Course[]} />
-        </div>
-
         {/* COURSE GRID */}
+        {isAboveSmallScreens ? (
+          <motion.div
+            className="mt-5 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.5 }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 },
+            }}
+          >
+            {coursesData.map((course) => (
+              <CourseCardMini
+                key={course.id}
+                course={course as Course}
+                onClick={() => handleClick(course.id)}
+              />
+            ))}
+          </motion.div>
+        ) : (
+          <div className="mt-5 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
+            {coursesData.map((course) => (
+              <CourseCardMini
+                key={course.id}
+                course={course as Course}
+                onClick={() => handleClick(course.id)}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* FIRST SLIDER (MIT NAVIGATION UND PAGINATION, WIE ORIGINAL) */}
         <motion.div
-          className="mt-5 grid grid-cols-1 gap-8 md:grid-cols-3"
+          className="md:w-3/5"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
-          variants={container}
+          transition={{ duration: 0.5 }}
+          variants={{
+            hidden: { opacity: 0, x: -50 },
+            visible: { opacity: 1, x: 0 },
+          }}
         >
-          {coursesData.map((course) => (
-            <CourseCardMini
-              key={course.id}
-              course={course as Course}
-              onClick={() => handleClick(course.id)}
-            />
-          ))}
+          <h1 className="pt-10 text-3xl font-semibold">Featured in Motion</h1>
         </motion.div>
-
-        {/* FIRST SLIDER (MIT NAVIGATION UND PAGINATION, WIE ORIGINAL) */}
-        <h1 className="pt-10 text-3xl font-semibold">Featured in Motion</h1>
+        {/* <h1 className="pt-10 text-3xl font-semibold">Featured in Motion</h1> */}
         <motion.div
           className="pt-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
-          variants={container}
+          transition={{ duration: 0.5 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
+          }}
         >
           <Carousel
             elements={swipperArray}
@@ -158,13 +190,30 @@ const Benefits = () => {
         </motion.div>
 
         {/* SECOND SLIDER (RUNDE BUTTONS UNTEN IN DER MITTE, DEIN ALTER "NEW SLIDER") */}
-        <h1 className="pt-10 text-3xl font-semibold">New Slider</h1>
+        <motion.div
+          className="md:w-3/5"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+          variants={{
+            hidden: { opacity: 0, x: -50 },
+            visible: { opacity: 1, x: 0 },
+          }}
+        >
+          <h1 className="pt-10 text-3xl font-semibold">New Slider</h1>
+        </motion.div>
+        {/* <h1 className="pt-10 text-3xl font-semibold">New Slider</h1> */}
         <motion.div
           className="pt-10"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.5 }}
-          variants={container}
+          transition={{ duration: 0.5 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
+          }}
         >
           <Carousel
             elements={swipperArray}
