@@ -91,7 +91,7 @@ export default function CourseRow({ course }: { course: Course }) {
               <div className="flex items-center justify-between gap-3">
                 {/* Left side */}
                 <div className="flex min-w-0 items-center gap-2">
-                  <h3 className="truncate text-base font-semibold md:text-lg">
+                  <h3 className="text-base font-semibold break-words whitespace-normal md:text-lg">
                     {title}
                   </h3>
 
@@ -142,7 +142,7 @@ export default function CourseRow({ course }: { course: Course }) {
                 />
                 <div className="min-w-0">
                   {lines.map((l, i) => (
-                    <p key={i} className="truncate">
+                    <p key={i} className="break-words whitespace-normal">
                       {l}
                     </p>
                   ))}
@@ -150,12 +150,14 @@ export default function CourseRow({ course }: { course: Course }) {
               </div>
 
               {address ? (
-                <p className="inline-flex items-center gap-2 truncate">
+                <p className="inline-flex items-start gap-2">
                   <FontAwesomeIcon
                     icon={faLocationDot}
                     className="h-4 w-4 text-gray-500"
                   />
-                  <span className="truncate">{address}</span>
+                  <span className="break-words whitespace-normal">
+                    {address}
+                  </span>
                 </p>
               ) : null}
             </div>
