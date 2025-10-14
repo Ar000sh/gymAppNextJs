@@ -31,7 +31,10 @@ const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <div className="flex h-[406px] cursor-pointer flex-col justify-between rounded-md border-2 border-gray-100 bg-white px-5 py-6 text-center transition hover:scale-103 hover:shadow-lg">
+    <div
+      onClick={onClick}
+      className="flex h-[406px] cursor-pointer flex-col justify-between rounded-md border-2 border-gray-100 bg-white px-5 py-6 text-center transition hover:scale-103 hover:shadow-lg"
+    >
       {/*      <motion.div
         variants={childVariant}
         whileHover={{ scale: 1.03 }}

@@ -27,13 +27,13 @@ export default function CourseDetailPage({
               fill
               priority
               sizes="100vw"
-              className="object-cover"
+              className="object-cover blur-2xl"
             />
           ) : null}
         </div>
 
         {/* Centered card overlapping hero */}
-        <div className="relative z-10 container mx-auto -mt-28 px-4 md:-mt-40">
+        <div className="relative z-10 container mx-auto -mt-41 px-4 md:-mt-53">
           <div className="mx-auto max-w-6xl">
             <CourseCard course={course} />
           </div>
