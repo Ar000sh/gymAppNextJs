@@ -8,7 +8,7 @@ type Props = {
 const NormalButton = ({ children, onClick }: Props) => {
   return (
     <button
-      className="bg-secondary-500 hover:bg-primary-500 rounded-md px-10 py-2 hover:text-white"
+      className="bg-gray-600  rounded-md px-10 py-2 text-white"
       onClick={onClick}
     >
       {children}

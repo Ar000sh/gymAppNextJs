@@ -83,7 +83,7 @@ const ContactUs = () => {
             <FormBuilder
               fields={fields}
               submitLabel="SUBMIT"
-              submitStyles="mt-5 rounded-lg bg-secondary-500 px-20 py-3 transition duration-500 hover:text-white"
+              submitStyles="mt-5 rounded-lg bg-gray-600 px-20 py-3 transition duration-500 text-white"
               formfieldBaseStyles = "w-full rounded-lg bg-primary-300 px-5 py-3 placeholder-white"
               className="flex flex-col gab-5"
               //action="https://formsubmit.co/e8a5bdfa807605332f809e5656e27c6e"

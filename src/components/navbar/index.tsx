@@ -53,7 +53,7 @@ export default function Navbar() {
   return (
     <nav>
       <div
-        className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}
+        className={`${navbarBackground} ${flexBetween} bg-gray-50 fixed top-0 z-30 w-full py-6`}
       >
         <div className={`${flexBetween} mx-auto w-5/6`}>
           <div className={`${flexBetween} w-full gap-16`}>
@@ -100,7 +100,7 @@ export default function Navbar() {
                         Sign In
                       </Link>
                       <Link
-                        className="bg-secondary-500 hover:bg-primary-500 rounded-md px-10 py-2 hover:text-white"
+                        className="bg-gray-600 rounded-md px-10 py-2 text-white"
                         href={{ pathname: "/auth/signup" }}
                       >
                         Become a Member

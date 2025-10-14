@@ -10,17 +10,18 @@
 /* 4) Design tokens */
 @theme {
   /* Colors */
-  --color-gray-20: #f8f4eb;
-  --color-gray-50: #efe6e6;
-  --color-gray-100: #dfcccc;
-  --color-gray-500: #5e0000;
+  --color-gray-20: #f8fafc;
+  --color-gray-50: #f1f5f9;
+  --color-gray-100: #e2e8f0;
+  --color-gray-500: #0f172a;
+  --color-gray-600: #1e293b;
 
-  --color-primary-100: #ffe1e0;
-  --color-primary-300: #ffa6a3;
+  --color-primary-100: #e2e8f0;
+  --color-primary-300: #64748b;
   --color-primary-500: #ff6b66;
 
-  --color-secondary-400: #ffcd5b;
-  --color-secondary-500: #ffc132;
+  --color-secondary-400: #3b82f6;
+  --color-secondary-500: #2563eb;
 
   /* Fonts */
   --font-dmsans: "DM Sans", sans-serif;
