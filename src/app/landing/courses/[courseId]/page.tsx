@@ -34,7 +34,7 @@ async function getSimilar(category?: string, excludeId?: string) {
   });
   if (!res.ok) return [];
   const json = await res.json();
-  return (json.data ?? []).filter((c: any) => c.id !== excludeId); // snake_case rows
+  return ((json.data as Course[]) ?? []).filter((c) => c.id !== excludeId); // snake_case rows
 }
 // modify to read the actuall course and then use it instead of this behavair
 export default async function Page({ params }: CoursePageProps) {
