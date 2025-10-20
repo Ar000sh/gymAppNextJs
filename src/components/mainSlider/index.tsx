@@ -44,12 +44,12 @@ function Placeholder() {
 }
 /** one tile (handles missing course or missing image) */
 function Tile({ course }: { course?: Course }) {
-  const hasImg = !!course?.imageUrl;
+  const hasImg = !!course?.image_url;
   return (
     <div className="relative h-[200px] w-[150px] transform-gpu transition-transform duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl">
       {hasImg ? (
         <Image
-          src={course!.imageUrl!}
+          src={course!.image_url!}
           alt={course?.title ?? "image"}
           fill
           sizes="150px"
