@@ -20,9 +20,9 @@ export default function CourseDetailPage({
       {/* Hero background */}
       <div className="relative">
         <div className="relative h-[420px] w-full overflow-hidden md:h-[560px]">
-          {course.imageUrl ? (
+          {course.image_url ? (
             <Image
-              src={course.imageUrl}
+              src={course.image_url}
               alt={course.title}
               fill
               priority

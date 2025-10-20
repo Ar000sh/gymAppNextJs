@@ -45,7 +45,7 @@ const CourseCardMini: React.FC<{ course: Course; onClick: () => void }> = ({
         <div className="mb-4 flex justify-center">
           <div className="h-48 w-full overflow-hidden rounded-lg">
             <img
-              src={course.imageUrl}
+              src={course.image_url}
               alt={course.title}
               className="h-full w-full object-cover"
             />

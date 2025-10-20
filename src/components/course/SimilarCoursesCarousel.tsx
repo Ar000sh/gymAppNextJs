@@ -24,15 +24,15 @@ export default function SimilarCoursesCarousel({
           {courses.map((c) => (
             <Link
               key={c.id}
-              href={`landing/courses/${c.id}`}
+              href={`/landing/courses/${c.id}`}
               className="group w-[260px] transform transition hover:-translate-y-2 sm:w-[280px] md:w-[300px]"
             >
               <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-md transition hover:shadow-2xl">
                 {/* Bild */}
                 <div className="relative h-40 w-full overflow-hidden">
-                  {c.imageUrl ? (
+                  {c.image_url ? (
                     <Image
-                      src={c.imageUrl}
+                      src={c.image_url}
                       alt={c.title}
                       fill
                       sizes="100vw"

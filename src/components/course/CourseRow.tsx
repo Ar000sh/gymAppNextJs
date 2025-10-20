@@ -13,17 +13,17 @@ import type { Course } from "@/types/course";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
 type DateLike = {
-  startDate: string;
-  startTime?: string;
-  endDate: string;
-  endTime?: string;
+  start_date: string;
+  start_time?: string;
+  end_date: string;
+  end_time?: string;
 };
 
 function formatRange(d: DateLike): string {
   const start = parseISO(
-    `${d.startDate}${d.startTime ? `T${d.startTime}` : ""}`,
+    `${d.start_date}${d.start_time ? `T${d.start_time}` : ""}`,
   );
-  const end = parseISO(`${d.endDate}${d.endTime ? `T${d.endTime}` : ""}`);
+  const end = parseISO(`${d.end_date}${d.end_time ? `T${d.end_time}` : ""}`);
 
   const startStr = format(start, "dd MMM yyyy, HH:mm");
   const endStrSameDay = format(end, "HH:mm");
@@ -33,18 +33,32 @@ function formatRange(d: DateLike): string {
     ? `${startStr} – ${endStrSameDay}`
     : `${startStr} – ${endStrFull}`;
 }
+type SessionCamel = {
+  startDate: string;
+  startTime?: string;
+  endDate: string;
+  endTime?: string;
+};
 
+function toDateLike(s: SessionCamel): DateLike {
+  return {
+    start_date: s.startDate,
+    start_time: s.startTime,
+    end_date: s.endDate,
+    end_time: s.endTime,
+  };
+}
 export default function CourseRow({ course }: { course: Course }) {
   const {
     title,
     subtitle,
     category,
-    imageUrl,
-    startDate,
-    startTime,
-    endDate,
-    endTime,
-    ageRestriction,
+    image_url,
+    start_date,
+    start_time,
+    end_date,
+    end_time,
+    age_restriction,
     address,
     sessions,
   } = course;
@@ -53,15 +67,15 @@ export default function CourseRow({ course }: { course: Course }) {
   const lines = React.useMemo(() => {
     const base =
       sessions && sessions.length > 0
-        ? sessions.map((s) => formatRange(s))
-        : [formatRange({ startDate, startTime, endDate, endTime })];
+        ? sessions.map((s) => formatRange(toDateLike(s)))
+        : [formatRange({ start_date, start_time, end_date, end_time })];
     //console.log("testing: ", base);
     if (base.length <= 2) return base;
     const head = base.slice(0, 2);
     const more = base.length - 2;
     return [...head, `+${more} more session${more > 1 ? "s" : ""}`];
     //return [];
-  }, [sessions, startDate, startTime, endDate, endTime]);
+  }, [sessions, start_date, start_time, end_date, end_time]);
 
   const isAboveSmallScreens = useMediaQuery("(min-width: 768px)");
   return (
@@ -69,9 +83,9 @@ export default function CourseRow({ course }: { course: Course }) {
       <div className="w-full items-center gap-3 rounded-xl border border-gray-200/80 p-3 transition hover:bg-gray-50 md:gap-4 md:p-4">
         <div className="grid w-full grid-cols-[auto_minmax(0,_1fr)] gap-3 md:gap-4">
           <div className="relative h-[72px] w-[84px] overflow-hidden rounded-lg md:h-[96px] md:w-[112px]">
-            {imageUrl ? (
+            {image_url ? (
               <Image
-                src={imageUrl}
+                src={image_url}
                 alt={title}
                 fill
                 sizes="112px"
@@ -104,7 +118,7 @@ export default function CourseRow({ course }: { course: Course }) {
                 </div>
 
                 {/* Right side */}
-                {ageRestriction === "ADULT_18_PLUS" ? (
+                {age_restriction === "ADULT_18_PLUS" ? (
                   <span className="inline-flex shrink-0 items-center rounded-md border border-red-500/20 bg-red-500/10 px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap text-red-600">
                     18+
                   </span>
@@ -121,7 +135,7 @@ export default function CourseRow({ course }: { course: Course }) {
                   ) : null}
 
                   {/* Right side */}
-                  {ageRestriction === "ADULT_18_PLUS" ? (
+                  {age_restriction === "ADULT_18_PLUS" ? (
                     <span className="inline-flex shrink-0 items-center rounded-md border border-red-500/20 bg-red-500/10 px-1.5 py-0.5 text-[10px] font-semibold whitespace-nowrap text-red-600">
                       18+
                     </span>

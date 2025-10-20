@@ -4,12 +4,12 @@ export interface Course {
   title: string;
   subtitle?: string;
   description: string;
-  imageUrl?: string;
-  startDate: string; 
-  startTime?: string;
-  endDate: string;
-  endTime?: string;
-  ageRestriction: "NO_RESTRICTION" | "ADULT_18_PLUS";
+  image_url?: string;
+  start_date: string;
+  start_time?: string;
+  end_date: string;
+  end_time?: string;
+  age_restriction: "NO_RESTRICTION" | "ADULT_18_PLUS";
   address: string;
   email: string;
   sessions?: Array<{
@@ -19,5 +19,3 @@ export interface Course {
     endTime?: string;
   }>;
 }
-
-

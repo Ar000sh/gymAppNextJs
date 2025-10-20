@@ -24,12 +24,12 @@ export default function CourseCard({ course }: CourseCardProps) {
     title,
     subtitle,
     category,
-    imageUrl,
-    startDate,
-    startTime,
-    endDate,
-    endTime,
-    ageRestriction,
+    image_url,
+    start_date,
+    start_time,
+    end_date,
+    end_time,
+    age_restriction,
     address,
     email,
   } = course;
@@ -37,8 +37,10 @@ export default function CourseCard({ course }: CourseCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const dateTimeDisplay = useMemo(() => {
-    const start = parseISO(`${startDate}${startTime ? `T${startTime}` : ""}`);
-    const end = parseISO(`${endDate}${endTime ? `T${endTime}` : ""}`);
+    const start = parseISO(
+      `${start_date}${start_time ? `T${start_time}` : ""}`,
+    );
+    const end = parseISO(`${end_date}${end_time ? `T${end_time}` : ""}`);
 
     const startStr = format(start, "dd MMM yyyy, HH:mm");
     const endStrSameDay = format(end, "HH:mm");
@@ -48,7 +50,7 @@ export default function CourseCard({ course }: CourseCardProps) {
       return `${startStr} – ${endStrSameDay}`;
     }
     return `${startStr} – ${endStrFull}`;
-  }, [startDate, startTime, endDate, endTime]);
+  }, [start_date, start_time, end_date, end_time]);
 
   const sessionDisplays = useMemo(() => {
     if (!course.sessions || course.sessions.length === 0) return [];
@@ -85,7 +87,7 @@ export default function CourseCard({ course }: CourseCardProps) {
             <h1 className="text-3xl leading-snug font-extrabold md:text-[32px]">
               {title}
             </h1>
-            {ageRestriction === "ADULT_18_PLUS" ? (
+            {age_restriction === "ADULT_18_PLUS" ? (
               <span className="ml-2 inline-flex items-center rounded-md border border-red-500/20 bg-red-500/10 px-2 py-0.5 text-xs font-semibold text-red-600">
                 18+
               </span>
@@ -164,10 +166,10 @@ export default function CourseCard({ course }: CourseCardProps) {
         </div>
 
         <div className="relative min-h-[320px] overflow-hidden md:border-l md:border-gray-100">
-          {imageUrl ? (
+          {image_url ? (
             <motion.div>
               <Image
-                src={imageUrl}
+                src={image_url}
                 alt={title}
                 fill
                 sizes="(min-width: 768px) 50vw, 100vw"
