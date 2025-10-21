@@ -9,12 +9,6 @@ interface CoursePageProps extends PageProps {
   params: Promise<{ courseId: string }>; // ✅ works in all cases
 }
 
-function readCourses(): Course[] {
-  const filePath = path.join(process.cwd(), "src", "mock", "courses.json");
-  const raw = fs.readFileSync(filePath, "utf-8");
-  return JSON.parse(raw) as Course[];
-}
-
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!; // from .env
 
 async function getCourse(id: string) {
@@ -28,13 +22,19 @@ async function getCourse(id: string) {
 
 async function getSimilar(category?: string, excludeId?: string) {
   if (!category) return [];
-  const params = new URLSearchParams({ category, limit: "8", page: "1" });
+  const params = new URLSearchParams({
+    category: `eq(${category})`,
+    limit: "3",
+    id: `not(${excludeId})`,
+  });
   const res = await fetch(`${BASE_URL}/api/courses?${params.toString()}`, {
     next: { revalidate: 300, tags: ["courses"] },
   });
+
   if (!res.ok) return [];
   const json = await res.json();
-  return ((json.data as Course[]) ?? []).filter((c) => c.id !== excludeId); // snake_case rows
+  console.log("res: ", json);
+  return (json.data as Course[]) ?? []; // snake_case rows
 }
 // modify to read the actuall course and then use it instead of this behavair
 export default async function Page({ params }: CoursePageProps) {
