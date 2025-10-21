@@ -11,7 +11,7 @@ async function getCourses(limit = INITIAL_LIMIT) {
     limit: `${limit}`,
   });
   const res = await fetch(
-    `${BASE_URL ?? ""}/api/courses?${params.toString()}`,
+    `${BASE_URL ?? "https://gym-app-next-js.vercel.app"}/api/courses?${params.toString()}`,
     {
       next: { revalidate: 300, tags: ["courses"] },
     },
