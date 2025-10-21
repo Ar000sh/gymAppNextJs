@@ -70,7 +70,7 @@ function Tile({ course }: { course?: Course }) {
   );
 }
 
-// B 150 L 200
+// Breite 150 Länge 200
 const MainSlider = ({ courses }: Props) => {
   const swipperArray = chunk(courses, 2).map((pair, idx) => {
     const [c1, c2] = pair; // c2 may be undefined if odd length
