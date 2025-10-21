@@ -3,16 +3,19 @@ import { columns } from "@/components/course/table/columns";
 import { Course } from "@/types/course";
 
 // Re-generate at most every 5 minutes
-const INITIAL_LIMIT = 100;
+const INITIAL_LIMIT = 20;
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!; // from .env
 
 async function getCourses(limit = INITIAL_LIMIT) {
   const params = new URLSearchParams({
     limit: `${limit}`,
   });
-  const res = await fetch(`${BASE_URL}/api/courses?${params.toString()}`, {
-    next: { revalidate: 300, tags: ["courses"] },
-  });
+  const res = await fetch(
+    `${BASE_URL ?? ""}/api/courses?${params.toString()}`,
+    {
+      next: { revalidate: 300, tags: ["courses"] },
+    },
+  );
 
   if (!res.ok) return [];
   const json = await res.json();
